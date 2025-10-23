@@ -1,5 +1,5 @@
 import React, { type ReactElement } from "react";
-import { type ContextPath, usePageContent } from "@/lib/fetchContent";
+import { CmsRequestContext, usePageContent } from "@/lib/fetchContent";
 import type { PageInformation } from "@/types/types";
 import { CTA } from "./ui/Cta";
 import { Hero, type HeroProps } from "./ui/Hero";
@@ -26,14 +26,14 @@ export const PageBottomContent = ({ children }: PagePositionContentProps) => (
 
 // === Wrapper-Props ===
 export type PageWrapperProps = {
-	context: ContextPath;
+	context: CmsRequestContext<"my-page">;
 	children?:
 		| ReactElement<PagePositionContentProps>
 		| ReactElement<PagePositionContentProps>[];
 };
 
 export function PageWrapper({ context, children }: PageWrapperProps) {
-	const pageContent = usePageContent<PageInformation>(context);
+	const pageContent: PageInformation = usePageContent<"my-page">(context);
 	const heroOverride = React.Children.toArray(children).find(
 		(child) => (child as ReactElement).type === HeroOverrideContent,
 	);
@@ -54,7 +54,7 @@ export function PageWrapper({ context, children }: PageWrapperProps) {
 		content,
 		cta_text,
 		cta_link,
-	} = pageContent.acf;
+	} = pageContent;
 	return (
 		<>
 			{(heroOverride) ? (

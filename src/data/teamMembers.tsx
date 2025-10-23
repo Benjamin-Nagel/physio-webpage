@@ -1,7 +1,7 @@
 
 import type { TeamMember } from "@/types/types";
 
-export const faqs = [
+export const teamMembers = [
     {
 					id: 88,
 					name: "Julia",

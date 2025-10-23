@@ -1,6 +1,13 @@
 import path from "node:path";
 import { use } from "react";
-import { getWordpressApiUrl } from "./environment";
+import { getGitHubWorkflowBuild, getWordpressApiUrl } from "./environment";
+import { complaints } from "@/data/complaints";
+import { faqs } from "@/data/faqs";
+import { teamMembers } from "@/data/teamMembers";
+import { treatments } from "@/data/treatments";
+import { pageContents } from "@/data/pages";
+import { PageInformation, Complaint, Treatment, FaqContent, TeamMember } from "@/types/types";
+import { mediaMetadata } from "@/data/mediaMetadata";
 
 export type WordPressAcfContent<T> = {
 	id: number;
@@ -33,10 +40,10 @@ export interface Links {
 	about: About[];
 	author: Author[];
 	replies: Reply[];
-	"version-history": VersionHistory[];
-	"predecessor-version": PredecessorVersion[];
-	"wp:attachment": WpAttachment[];
-	curies: Cury[];
+	"version-history"?: VersionHistory[];
+	"predecessor-version"?: PredecessorVersion[];
+	"wp:attachment"?: WpAttachment[];
+	curies?: Cury[];
 }
 
 export interface Self {
@@ -108,6 +115,12 @@ export interface WordPressAttachment {
 	description: {
 		rendered: string;
 	};
+	guid: {
+		rendered: string;
+	};
+	meta: { _acf_changed: boolean }
+	acf: []
+	post? : number | null;
 	caption: {
 		rendered: string;
 	};
@@ -115,7 +128,6 @@ export interface WordPressAttachment {
 	media_type: string;
 	mime_type: string;
 	media_details: MediaDetails;
-	post: number;
 	source_url: string;
 	_links: Links;
 }
@@ -123,19 +135,12 @@ export interface MediumContent {
 	file: string;
 	width: number;
 	height: number;
-	filesize: number;
+	filesize?: number;
 }
 export type MediaDetails = MediumContent & {
-	sizes: Sizes;
+	sizes: Record<string, Medium>;
 	image_meta: ImageMeta;
-	original_image: string;
 };
-export interface Sizes {
-	medium: Medium;
-	thumbnail: Medium;
-	medium_large: Medium;
-	full: Medium;
-}
 export type Medium = MediumContent & {
 	mime_type: string;
 	source_url: string;
@@ -164,40 +169,96 @@ export function getPagePathFromFile(filePath: string) {
 	return mySlug;
 }
 
-const wordPressUrl = getWordpressApiUrl();
+export type CmsContentType = "my-page" | "treatments" | "complaints" | "team" | "faq"
 
-export type ContextPath = {
-	type: "my-page" | "treatments" | "complaints" | "team" | "faq";
-	id: number;
+type CmsContentKeyTypeMap = {
+	[K in CmsContentType]: 
+		K extends "my-page" ? PageInformation :
+		K extends "complaints" ? Complaint :
+		K extends "faq" ? FaqContent :
+		K extends "team" ? TeamMember :
+		K extends "treatments" ? Treatment :
+		never;
 };
 
-export async function fetchPageContentByFile<T>({
+
+
+const cmsContentTypeMapper: { [K in CmsContentType]: CmsContentKeyTypeMap[K][] } = {
+	"my-page": pageContents,
+	"complaints": complaints,
+	"faq": faqs,
+	"team": teamMembers,
+	"treatments": treatments,
+};
+
+// type ContentTypeList = CmsContentKeyTypeMap[keyof CmsContentKeyTypeMap];
+type ContentTypeList = 
+  | PageInformation
+  | Complaint
+  | FaqContent
+  | TeamMember
+  | Treatment;
+
+const wordPressUrl = getWordpressApiUrl();
+
+// async function getFallbackData<T extends ContentTypeList>({
+// 	type,
+// 	id,
+// }: ContextPath): Promise<T> {
+// 	const data = cmsContentTypeMapper[type]
+// 	return data.filter(entry => entry.id === id)[0]
+// }
+
+export type CmsRequestContext<K extends CmsContentType> = { type: K; id: number }
+
+export async function getFallbackData<K extends CmsContentType>(
+  { type, id }: CmsRequestContext<K>
+): Promise<CmsContentKeyTypeMap[K] | undefined> {
+  const data = cmsContentTypeMapper[type] as CmsContentKeyTypeMap[K][]; // safe: mapping ist typsicher definiert
+  return data.find(entry => entry.id === id);
+}
+
+export async function fetchPageContentByFile<K extends CmsContentType>({
 	type,
 	id,
-}: ContextPath): Promise<WordPressAcfContent<T>> {
-	const url = `${wordPressUrl}/${type}/${id}`;
-	const res = await fetch(url);
-	if (!res.ok) {
-		throw new Error(`Fehler beim Laden von Content für ${type}?id=${id}`);
+}: CmsRequestContext<K>): Promise<CmsContentKeyTypeMap[K]> {
+	let data = await getFallbackData<K>({
+		type,
+		id,
+	})
+	if (!getGitHubWorkflowBuild()) {
+		const url = `${wordPressUrl}/${type}/${id}`;
+		const res = await fetch(url);
+		if (!res.ok) {
+			throw new Error(`Fehler beim Laden von Content für ${type}?id=${id}`);
+		}
+		const apiData = (await res.json()) as WordPressAcfContent<CmsContentKeyTypeMap[K]>;
+		if (!apiData) {
+			throw new Error(`Kein Content für ${type}?id=${id} gefunden`);
+		}
+		data = apiData.acf
 	}
-	const data = (await res.json()) as WordPressAcfContent<T>;
 	if (!data) {
-		throw new Error(`Kein Content für ${type}?id=${id} gefunden`);
+		throw new Error(`Kein Fallback Content für ${type}?id=${id} gefunden`);
 	}
 	return data;
 }
-export function usePageContent<T>(context: ContextPath) {
-	return use(fetchPageContentByFile<T>(context));
+export function usePageContent<K extends CmsContentType>(context: CmsRequestContext<K>) {
+	return use(fetchPageContentByFile<K>(context));
 }
 
 export async function getWordPressMediaById(
 	id: number,
 ): Promise<WordPressAttachment> {
-	const res = await fetch(`${wordPressUrl}/media/${id}`);
-	if (!res.ok) {
-		throw new Error(`Fehler beim Laden von Media für ${id}`);
+	let data: WordPressAttachment = mediaMetadata.filter(metadata => metadata.id === id)[0]
+	if (!getGitHubWorkflowBuild()) {
+
+		const res = await fetch(`${wordPressUrl}/media/${id}`);
+		if (!res.ok) {
+			throw new Error(`Fehler beim Laden von Media für ${id}`);
+		}
+		data = (await res.json()) as WordPressAttachment;
 	}
-	const data = (await res.json()) as WordPressAttachment;
 	if (!data) {
 		throw new Error(`Keine Media für ${id} gefunden`);
 	}

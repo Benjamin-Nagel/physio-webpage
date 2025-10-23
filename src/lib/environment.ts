@@ -3,16 +3,12 @@ export function getPageUrl() {
     return process.env.PAGE_URL;
 }
 
-export function getCmsUrl() {
-    return process.env.CMS_URL;
-}
-
 export function getWordpressApiUrl() {
     return process.env.WORDPRESS_API_URL;
 }
 
 export function getGitHubWorkflowBuild() {
-    return process.env.GITHUB_WORKFLOW_BUILD
+    return process.env.WORKFLOW_BUILD
 }
 
 export function getGoogleMapsApiKey() {

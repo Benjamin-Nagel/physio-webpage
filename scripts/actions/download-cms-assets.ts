@@ -19,8 +19,17 @@ interface WPMediaItem {
   slug: string;
   media_type: string;
   source_url: string;
+	alt_text: string;
+	title: {
+		rendered: string;
+	};
+  
+	description: {
+		rendered: string;
+	};
   media_details: {
     file: string;
+
     sizes?: Record<string, WPMediaSize>;
   };
 }
@@ -191,6 +200,17 @@ async function downloadImages() {
       await downloadFile(size.source_url, localFile);
     }
   }
+  const mediaMetadataText = `
+import type { WordPressAttachment } from "@/lib/fetchContent";
+
+export const mediaMetadata = [
+    ${mediaItems
+      .map((mediaItem) => 
+        JSON.stringify(mediaItem)
+      )
+      .join(",")}   
+] as const satisfies WordPressAttachment[]; `;
+  writeDataFile(mediaMetadataText, "mediaMetadata.tsx");
 
   console.log("🎉 Alle WordPress-Bilder wurden erfolgreich heruntergeladen!");
 }
@@ -328,7 +348,7 @@ async function downloadTeamContent() {
   const teamText = `
 import type { TeamMember } from "@/types/types";
 
-export const faqs = [
+export const teamMembers = [
     ${teamMembers
       .map((teamMember) => {
         const acf = teamMember.acf;

@@ -8,17 +8,22 @@ import { use } from "react";
 import { PageMiddleContent, PageWrapper } from "@/components/PageWrapper";
 import type { WordPressAcfContent } from "@/lib/fetchContent";
 import type { FaqContent } from "@/types/types";
-import { getWordpressApiUrl } from "@/lib/environment";
+import { getGitHubWorkflowBuild, getWordpressApiUrl } from "@/lib/environment";
+import { faqs } from "@/data/faqs";
 
-async function loadFaqs(): Promise<WordPressAcfContent<FaqContent>[]> {
-	const url = `${getWordpressApiUrl()}/faq`;
-	const res = await fetch(url);
-	if (!res.ok) {
-		throw new Error(`Fehler beim Laden von Content für faqs`);
-	}
-	const data = (await res.json()) as WordPressAcfContent<FaqContent>[];
-	if (!data) {
-		throw new Error(`Kein Content für faqs gefunden`);
+async function loadFaqs(): Promise<FaqContent[]> {
+	let data: FaqContent[] = faqs
+	if (!getGitHubWorkflowBuild()) {
+		const url = `${getWordpressApiUrl()}/faq`;
+		const res = await fetch(url);
+		if (!res.ok) {
+			throw new Error(`Fehler beim Laden von Content für faqs`);
+		}
+		const cmsResponse = (await res.json()) as WordPressAcfContent<FaqContent>[];
+		data = cmsResponse.map(entry => entry.acf)
+		if (!data) {
+			throw new Error(`Kein Content für faqs gefunden`);
+		}
 	}
 	return data;
 }
@@ -35,11 +40,11 @@ export default function Faq() {
 							</h2>
 							<dl className="mt-10 space-y-6 divide-y divide-white/10">
 								{faqs.map((faq) => (
-									<Disclosure as="div" className="pt-6" key={faq.acf.question}>
+									<Disclosure as="div" className="pt-6" key={faq.question}>
 										<dt>
 											<DisclosureButton className="flex w-full items-start justify-between text-left text-white">
 												<span className="text-base font-semibold leading-7">
-													{faq.acf.question}
+													{faq.question}
 												</span>
 												<span className="ml-6 flex h-7 items-center">
 													<MinusCircleIcon
@@ -51,7 +56,7 @@ export default function Faq() {
 										</dt>
 										<DisclosurePanel as="dd" className="mt-2 pr-12">
 											<p className="text-base leading-7 text-gray-300">
-												{faq.acf.answer}
+												{faq.answer}
 											</p>
 										</DisclosurePanel>
 									</Disclosure>

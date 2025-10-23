@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import type { GenericContentProps } from "@/types/types";
-import { getWordpressApiUrl } from "@/lib/environment";
+import { getPageUrl, getWordpressApiUrl } from "@/lib/environment";
 
 export type ContactProps = GenericContentProps & {
 	address: string;
@@ -50,7 +50,7 @@ interface ContactFormResponse {
 
 export function Contact({ headline, address, email, telephone }: ContactProps) {
 	const formId = 74;
-	const siteUrl = `${getWordpressApiUrl()}`;
+	const siteUrl = `${getPageUrl()}`;
 	console.log(siteUrl);
 
 	const [formData, setFormData] = useState<ContactFormData>({

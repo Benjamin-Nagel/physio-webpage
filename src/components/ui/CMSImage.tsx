@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import type { ReactElement } from "react";
-import { getWordPressMediaById, type Medium } from "@/lib/fetchContent";
+import { getWordPressMediaById } from "@/lib/fetchContent";
 import { getCmsMode, getNodeEnv } from "@/lib/environment";
 
 const isStatic =
@@ -59,7 +59,7 @@ export async function CMSImage({
 	const sizesData = cmsAttachment.media_details.sizes;
 
 	// Sammle verfügbare Varianten
-	const allSizes: Medium[] = Object.values(sizesData);
+	const allSizes = Object.values(sizesData);
 
 	const upperLimit = maxWidth ?? 1024;
 

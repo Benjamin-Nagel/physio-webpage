@@ -120,7 +120,7 @@ export default function Leistung({ params }: LeistungParams) {
 	const { slug } = params;
 	const treatment = treatments.find((item) => item.slug === slug);
 
-	const content = usePageContent<Treatment>({
+	const content: Treatment = usePageContent<"treatments">({
 		id: treatment?.id || 0,
 		type: "treatments",
 	});
@@ -131,8 +131,8 @@ export default function Leistung({ params }: LeistungParams) {
 	const heroHeadline = treatment.name;
 	let heroDescription: string = treatment.short_description;
 
-	if (content.acf.short_description) {
-		heroDescription = content.acf.short_description;
+	if (content.short_description) {
+		heroDescription = content.short_description;
 	}
 
 	return (
@@ -141,15 +141,15 @@ export default function Leistung({ params }: LeistungParams) {
 				<Hero
 					description={heroDescription}
 					headline={heroHeadline}
-					image={{ cmsImageId: content.acf.image }}
+					image={{ cmsImageId: content.image }}
 				/>
 			</HeroOverrideContent>
 			<PageTopContent>
 				<div>
-					{content.acf.description && (
+					{content.description && (
 						<div
 							className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
-							dangerouslySetInnerHTML={{ __html: content.acf.description }}
+							dangerouslySetInnerHTML={{ __html: content.description }}
 						/>
 					)}
 				</div>
