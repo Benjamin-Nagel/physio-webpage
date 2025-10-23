@@ -49,6 +49,22 @@ jobs:
           NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
           NEXT_PUBLIC_CMS_MODE: "static"
 
+      - name: list output
+        run: ls -all out/
+
+      - name: Archive static export
+        run: |
+          cd out
+          zip -r ../next-export.zip .
+          cd ..
+
+      # 📦 Bereitstellen als GitHub-Artefakt
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: next-export
+          path: next-export.zip
+
       # - name: Upload artifact
       #   uses: actions/upload-pages-artifact@v3
       #   with:
