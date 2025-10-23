@@ -27,19 +27,8 @@ jobs:
         with:
           node-version: 22
           cache: 'npm'
-
       - name: Install dependencies
         run: npm ci
-
-      - name: Debug environment
-        run: |
-          echo "PAGE_URL=$PAGE_URL"
-          echo "WORDPRESS_API_URL=$WORDPRESS_API_URL"
-          echo "WORKFLOW_BUILD=$WORKFLOW_BUILD"
-        env:
-          PAGE_URL: ${{ secrets.PAGE_URL }}
-          WORDPRESS_API_URL: ${{ secrets.WORDPRESS_API_URL }}
-          WORKFLOW_BUILD: "true"
       - name: Build and Export Next.js
         run: npm run build
         env:
@@ -64,8 +53,3 @@ jobs:
         with:
           name: next-export
           path: next-export.zip
-
-      # - name: Upload artifact
-      #   uses: actions/upload-pages-artifact@v3
-      #   with:
-      #     path: out  # Standard-Output-Verzeichnis von `next export`
