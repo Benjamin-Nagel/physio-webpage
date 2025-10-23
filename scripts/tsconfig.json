@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		// Ermöglicht das Importieren von CommonJS-Modulen auf ES-Weise
+		"esModuleInterop": true,
+
+		"module": "esnext",
+		// Stellt sicher, dass Module im Node-Stil aufgelöst werden,
+		// was das Suchen nach .ts (oder .js) bei Fehlen der Endung beinhaltet.
+		"moduleResolution": "node",
+
+		// Ermöglicht das Verwenden von 'await' auf Top-Level außerhalb einer async-Funktion
+		"target": "es2022"
+
+		// ... andere Optionen ...
+	}
+}
