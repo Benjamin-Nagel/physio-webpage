@@ -2,6 +2,16 @@ import clsx from "clsx";
 import type { ReactElement } from "react";
 import { getWordPressMediaById } from "@/lib/fetchContent";
 import { getCmsMode, getNodeEnv } from "@/lib/environment";
+import Image from "next/image";
+
+const isProd = process.env.NODE_ENV === "production";
+const isWorkflowBuild = process.env.WORKFLOW_BUILD || false
+
+let repoName = ""
+if (isProd && isWorkflowBuild) {
+	const pageUrlParts = process.env.PAGE_URL?.split("/")
+	repoName = pageUrlParts[pageUrlParts.length - 1]
+}
 
 const isStatic =
 	getNodeEnv() === "production" &&
@@ -91,7 +101,7 @@ export async function CMSImage({
 
 	let fallbackImageUrl = fallbackImage.source_url;
 	if (isStatic) {
-		fallbackImageUrl = `/cms-images/${cmsAttachment.slug}/${fallbackImage.file}`;
+		fallbackImageUrl = ((isProd && isWorkflowBuild)?`/${repoName}` : '') + `/cms-images/${cmsAttachment.slug}/${fallbackImage.file}`;
 	}
 
 	const altText = alt || cmsAttachment.alt_text || cmsAttachment.title.rendered;
