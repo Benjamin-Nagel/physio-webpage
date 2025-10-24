@@ -1,5 +1,6 @@
 "use client";
 import { Wrapper } from "@googlemaps/react-wrapper";
+import klaro from "klaro/dist/klaro-no-css";
 import { useEffect, useRef, useState } from "react";
 import { getGoogleMapsApiKey } from "@/lib/environment";
 import { klaroConfig } from "../Klaro";
@@ -101,7 +102,12 @@ export default function GoogleMapOfficial({
 						style={{ height: "auto", maxWidth: "100%" }}
 					/>
 				)}
-				<p style={{ marginTop: "10px", textAlign: "center" }}>
+				<p
+					onClick={() => {
+						klaro.show(klaroConfig);
+					}}
+					style={{ marginTop: "10px", textAlign: "center" }}
+				>
 					Um die Google-Karte anzuzeigen, müssen Sie der Verwendung von Google
 					Maps im Rahmen unserer Datenschutzeinstellungen zustimmen.
 				</p>
