@@ -90,7 +90,7 @@ export async function CMSImage({
 		.map((img) => {
 			let myUrl = img.source_url;
 			if (isStatic) {
-				myUrl = `/cms-images/${cmsAttachment.slug}/${img.file}`;
+				myUrl = ((isProd && isWorkflowBuild)?`/${repoName}` : '') + `/cms-images/${cmsAttachment.slug}/${img.file}`;
 			}
 			return `${myUrl} ${img.width}w`;
 		})
