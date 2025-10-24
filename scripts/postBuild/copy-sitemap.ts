@@ -1,7 +1,7 @@
 import { copyFile } from "node:fs/promises";
 
 Promise.all(
-	["sitemap.xml", "sitemap-0.xml"].map((file) =>
+	["robots.txt", "sitemap.xml", "sitemap-0.xml"].map((file) =>
 		copyFile(`public/${file}`, `out/${file}`),
 	),
 )

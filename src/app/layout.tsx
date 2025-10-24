@@ -1,12 +1,12 @@
 import "./globals.css";
 
+import clsx from "clsx";
 import dynamic from "next/dynamic";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Header } from "@/components/Header";
 import CookieManager from "@/components/Klaro";
 import { SeoStructuredData } from "@/components/seo/SeoStructuredData";
 import { baseMetadata } from "@/data/seo";
-import clsx from "clsx";
 
 const Footer = dynamic(() =>
 	import("@/components/Footer").then((block) => block.Footer),
@@ -32,7 +32,10 @@ export default function RootLayout({
 	return (
 		<html lang="de">
 			<body
-				className={clsx(`${geistSans.variable} ${geistMono.variable} antialiased`, "bg-white dark:bg-gray-800")}
+				className={clsx(
+					`${geistSans.variable} ${geistMono.variable} antialiased`,
+					"bg-white dark:bg-gray-800",
+				)}
 			>
 				<div>
 					<Header />

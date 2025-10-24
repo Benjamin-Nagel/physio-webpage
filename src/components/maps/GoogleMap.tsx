@@ -101,9 +101,7 @@ export default function GoogleMapOfficial({
 						style={{ height: "auto", maxWidth: "100%" }}
 					/>
 				)}
-				<p
-					style={{ marginTop: "10px", textAlign: "center" }}
-				>
+				<p style={{ marginTop: "10px", textAlign: "center" }}>
 					Um die Google-Karte anzuzeigen, müssen Sie der Verwendung von Google
 					Maps im Rahmen unserer Datenschutzeinstellungen zustimmen.
 				</p>
@@ -116,7 +114,7 @@ export default function GoogleMapOfficial({
 					}}
 					type="button"
 				>
-					Datenschutzeinstellungen öffnen 
+					Datenschutzeinstellungen öffnen
 				</button>
 			</div>
 		);
