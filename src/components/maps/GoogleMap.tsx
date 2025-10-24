@@ -1,6 +1,5 @@
 "use client";
 import { Wrapper } from "@googlemaps/react-wrapper";
-import klaro from "klaro/dist/klaro-no-css";
 import { useEffect, useRef, useState } from "react";
 import { getGoogleMapsApiKey } from "@/lib/environment";
 import { klaroConfig } from "../Klaro";
@@ -111,7 +110,8 @@ export default function GoogleMapOfficial({
 				{/* Optional: Link/Button, der das Klaro-Fenster öffnet */}
 				<button
 					className="my-4 rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-					onClick={() => {
+					onClick={async () => {
+						const klaro = await import("klaro/dist/klaro-no-css");
 						klaro.show(klaroConfig);
 					}}
 					type="button"
