@@ -39,10 +39,26 @@ export default function Leistungen() {
 				/>
 				<Grid
 					elements={[
-						{ description: "", title: "Nach Operation oder Unfall" },
-						{ description: "", title: "Bei wiederkehrenden Schmerzen" },
-						{ description: "", title: "Bei Bewegungseinschränkungen" },
-						{ description: "", title: "Bei Verspannungen durch Büroarbeit" },
+						{
+							description:
+								"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+							title: "Nach Operation oder Unfall",
+						},
+						{
+							description:
+								"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+							title: "Bei wiederkehrenden Schmerzen",
+						},
+						{
+							description:
+								"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+							title: "Bei Bewegungseinschränkungen",
+						},
+						{
+							description:
+								"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+							title: "Bei Verspannungen durch Büroarbeit",
+						},
 					]}
 					headline="Warum unsere Leistungen?"
 					style="dark"

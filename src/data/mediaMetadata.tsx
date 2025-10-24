@@ -1475,7 +1475,7 @@ export const mediaMetadata = [
 			"status-inherit",
 			"hentry",
 		],
-		comment_status: "",
+		comment_status: "closed",
 		date: "2025-10-19T17:02:39",
 		date_gmt: "2025-10-19T15:02:39",
 		description: {
@@ -1488,7 +1488,7 @@ export const mediaMetadata = [
 				"http://localhost:8080/wp-content/uploads/2025/10/faqHeroImage.jpg",
 		},
 		id: 109,
-		link: "http://localhost:8080/faqheroimage/",
+		link: "http://localhost:8080/my-page/patienteninfo/faq/faqheroimage/",
 		media_details: {
 			file: "2025/10/faqHeroImage.jpg",
 			filesize: 98351,
@@ -1549,10 +1549,10 @@ export const mediaMetadata = [
 		media_type: "image",
 		meta: { _acf_changed: false },
 		mime_type: "image/jpeg",
-		modified: "2025-10-19T17:02:39",
-		modified_gmt: "2025-10-19T15:02:39",
+		modified: "2025-10-24T15:57:51",
+		modified_gmt: "2025-10-24T13:57:51",
 		ping_status: "closed",
-		post: null,
+		post: 245,
 		slug: "faqheroimage",
 		source_url:
 			"http://localhost:8080/wp-content/uploads/2025/10/faqHeroImage.jpg",

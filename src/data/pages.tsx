@@ -2,15 +2,16 @@ import type { PageInformation } from "@/types/types";
 
 export const pageContents = [
 	{
-		content: ``,
+		content: `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.`,
 		cta_link: "",
 		cta_text: "",
-		hero_text: ``,
-		hero_title: "",
+		hero_text: `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.`,
+		hero_title: "Seite nicht gefunden",
 		id: 249,
 		name: "",
-		seo_description: "",
-		seo_title: "",
+		seo_description:
+			"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+		seo_title: "Lorem ipsum dolor sit amet",
 		slug: "",
 		title: "Seite nicht gefunden",
 	},
@@ -28,15 +29,17 @@ export const pageContents = [
 		title: "FAQ-Eintrag",
 	},
 	{
-		content: ``,
+		content: `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.`,
 		cta_link: "",
 		cta_text: "",
-		hero_text: ``,
-		hero_title: "",
+		hero_image: 109,
+		hero_text: `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.`,
+		hero_title: "FAQ",
 		id: 245,
 		name: "",
-		seo_description: "",
-		seo_title: "",
+		seo_description:
+			"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+		seo_title: "FAQ",
 		slug: "",
 		title: "FAQ",
 	},
@@ -342,8 +345,9 @@ export const pageContents = [
 		hero_title: "",
 		id: 227,
 		name: "",
-		seo_description: "",
-		seo_title: "",
+		seo_description:
+			"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+		seo_title: "Lorem ipsum dolor sit amet",
 		slug: "",
 		title: "Aktuelles",
 	},
@@ -364,16 +368,17 @@ export const pageContents = [
 		title: "Partner",
 	},
 	{
-		content: ``,
+		content: `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.`,
 		cta_link: "",
-		cta_text: "",
+		cta_text: "Lorem ipsum dolor sit amet",
 		hero_image: 112,
-		hero_text: `Kontakt Kontakt Kontakt Kontakt`,
+		hero_text: `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.`,
 		hero_title: "",
 		id: 221,
 		name: "",
-		seo_description: "",
-		seo_title: "",
+		seo_description:
+			"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+		seo_title: "Lorem ipsum dolor sit amet",
 		slug: "",
 		title: "Kontakt",
 	},
@@ -466,9 +471,9 @@ Wir legen Wert auf eine angenehme und persönliche Atmosphäre in unserer Praxis
 		title: "Über uns",
 	},
 	{
-		content: ``,
-		cta_link: "",
-		cta_text: "",
+		content: `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.`,
+		cta_link: "/beschwerden",
+		cta_text: "Lorem ipsum dolor sit amet",
 		hero_image: 121,
 		hero_text: `Gemeinsam entwickeln wir Ihr Ziel und begleiten Sie auf Ihrem Weg dorthin.
 Uns ist es wichtig, Ihnen dabei zu helfen, ein gesundes Gleichgewicht zwischen Belastung und Belastbarkeit im Alltag zu finden. 
@@ -476,12 +481,12 @@ Uns ist es wichtig, Ihnen dabei zu helfen, ein gesundes Gleichgewicht zwischen B
 Dabei unterstützen wir Sie mit verschiedenen Therapieformen wie Krankengymnastik, Krankengymnastik am Gerät, Manuelle Therapie, Lymphdrainage und weiteren Zusatzleistungen.
 
 Wir legen Wert auf eine angenehme und persönliche Atmosphäre in unserer Praxis – nicht zuletzt durch unsere vierbeinige Praxisbegleiterin Liselotte. `,
-		hero_title:
-			"Herzlich willkommen in unserer Physiotherapie Praxis am Eigelstein!",
+		hero_title: "Herzlich willkommen in unserer Physiotherapie Praxis <NAME>!",
 		id: 203,
 		name: "",
-		seo_description: "",
-		seo_title: "",
+		seo_description:
+			"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+		seo_title: "Lorem ipsum dolor sit ame",
 		slug: "",
 		title: "Startseite",
 	},
