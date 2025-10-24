@@ -1,5 +1,5 @@
 import React, { type ReactElement } from "react";
-import { CmsRequestContext, usePageContent } from "@/lib/fetchContent";
+import { type CmsRequestContext, usePageContent } from "@/lib/fetchContent";
 import type { PageInformation } from "@/types/types";
 import { CTA } from "./ui/Cta";
 import { Hero, type HeroProps } from "./ui/Hero";
@@ -57,14 +57,16 @@ export function PageWrapper({ context, children }: PageWrapperProps) {
 	} = pageContent;
 	return (
 		<>
-			{(heroOverride) ? (
-				heroOverride
-			) : (
-				(hero_image) && (
-				<Hero headline={hero_title || title} image={{ cmsImageId: hero_image }}>
-					<p>{hero_text}</p>
-				</Hero>)
-			)}
+			{heroOverride
+				? heroOverride
+				: hero_image && (
+						<Hero
+							headline={hero_title || title}
+							image={{ cmsImageId: hero_image }}
+						>
+							<p>{hero_text}</p>
+						</Hero>
+					)}
 			{top}
 			{content && (
 				<Text headline="as">

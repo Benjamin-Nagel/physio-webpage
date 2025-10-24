@@ -80,7 +80,7 @@ export type TeamMember = {
 	position: string;
 	qualifikationen: string;
 	bio: string;
-}
+};
 
 export type PageInformation = GenericAcfContent & {
 	title: string;

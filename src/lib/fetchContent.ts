@@ -1,13 +1,19 @@
 import path from "node:path";
 import { use } from "react";
-import { getGitHubWorkflowBuild, getWordpressApiUrl } from "./environment";
 import { complaints } from "@/data/complaints";
 import { faqs } from "@/data/faqs";
+import { mediaMetadata } from "@/data/mediaMetadata";
+import { pageContents } from "@/data/pages";
 import { teamMembers } from "@/data/teamMembers";
 import { treatments } from "@/data/treatments";
-import { pageContents } from "@/data/pages";
-import { PageInformation, Complaint, Treatment, FaqContent, TeamMember } from "@/types/types";
-import { mediaMetadata } from "@/data/mediaMetadata";
+import type {
+	Complaint,
+	FaqContent,
+	PageInformation,
+	TeamMember,
+	Treatment,
+} from "@/types/types";
+import { getGitHubWorkflowBuild, getWordpressApiUrl } from "./environment";
 
 export type WordPressAcfContent<T> = {
 	id: number;
@@ -118,9 +124,9 @@ export interface WordPressAttachment {
 	guid: {
 		rendered: string;
 	};
-	meta: { _acf_changed: boolean }
-	acf: []
-	post? : number | null;
+	meta: { _acf_changed: boolean };
+	acf: [];
+	post?: number | null;
 	caption: {
 		rendered: string;
 	};
@@ -169,35 +175,44 @@ export function getPagePathFromFile(filePath: string) {
 	return mySlug;
 }
 
-export type CmsContentType = "my-page" | "treatments" | "complaints" | "team" | "faq"
+export type CmsContentType =
+	| "my-page"
+	| "treatments"
+	| "complaints"
+	| "team"
+	| "faq";
 
 type CmsContentKeyTypeMap = {
-	[K in CmsContentType]: 
-		K extends "my-page" ? PageInformation :
-		K extends "complaints" ? Complaint :
-		K extends "faq" ? FaqContent :
-		K extends "team" ? TeamMember :
-		K extends "treatments" ? Treatment :
-		never;
+	[K in CmsContentType]: K extends "my-page"
+		? PageInformation
+		: K extends "complaints"
+			? Complaint
+			: K extends "faq"
+				? FaqContent
+				: K extends "team"
+					? TeamMember
+					: K extends "treatments"
+						? Treatment
+						: never;
 };
 
-
-
-const cmsContentTypeMapper: { [K in CmsContentType]: CmsContentKeyTypeMap[K][] } = {
+const cmsContentTypeMapper: {
+	[K in CmsContentType]: CmsContentKeyTypeMap[K][];
+} = {
+	complaints: complaints,
+	faq: faqs,
 	"my-page": pageContents,
-	"complaints": complaints,
-	"faq": faqs,
-	"team": teamMembers,
-	"treatments": treatments,
+	team: teamMembers,
+	treatments: treatments,
 };
 
 // type ContentTypeList = CmsContentKeyTypeMap[keyof CmsContentKeyTypeMap];
-type ContentTypeList = 
-  | PageInformation
-  | Complaint
-  | FaqContent
-  | TeamMember
-  | Treatment;
+type ContentTypeList =
+	| PageInformation
+	| Complaint
+	| FaqContent
+	| TeamMember
+	| Treatment;
 
 const wordPressUrl = getWordpressApiUrl();
 
@@ -209,13 +224,17 @@ const wordPressUrl = getWordpressApiUrl();
 // 	return data.filter(entry => entry.id === id)[0]
 // }
 
-export type CmsRequestContext<K extends CmsContentType> = { type: K; id: number }
+export type CmsRequestContext<K extends CmsContentType> = {
+	type: K;
+	id: number;
+};
 
-export async function getFallbackData<K extends CmsContentType>(
-  { type, id }: CmsRequestContext<K>
-): Promise<CmsContentKeyTypeMap[K] | undefined> {
-  const data = cmsContentTypeMapper[type] as CmsContentKeyTypeMap[K][]; // safe: mapping ist typsicher definiert
-  return data.find(entry => entry.id === id);
+export async function getFallbackData<K extends CmsContentType>({
+	type,
+	id,
+}: CmsRequestContext<K>): Promise<CmsContentKeyTypeMap[K] | undefined> {
+	const data = cmsContentTypeMapper[type] as CmsContentKeyTypeMap[K][]; // safe: mapping ist typsicher definiert
+	return data.find((entry) => entry.id === id);
 }
 
 export async function fetchPageContentByFile<K extends CmsContentType>({
@@ -223,36 +242,41 @@ export async function fetchPageContentByFile<K extends CmsContentType>({
 	id,
 }: CmsRequestContext<K>): Promise<CmsContentKeyTypeMap[K]> {
 	let data = await getFallbackData<K>({
-		type,
 		id,
-	})
+		type,
+	});
 	if (!getGitHubWorkflowBuild()) {
 		const url = `${wordPressUrl}/${type}/${id}`;
 		const res = await fetch(url);
 		if (!res.ok) {
 			throw new Error(`Fehler beim Laden von Content für ${type}?id=${id}`);
 		}
-		const apiData = (await res.json()) as WordPressAcfContent<CmsContentKeyTypeMap[K]>;
+		const apiData = (await res.json()) as WordPressAcfContent<
+			CmsContentKeyTypeMap[K]
+		>;
 		if (!apiData) {
 			throw new Error(`Kein Content für ${type}?id=${id} gefunden`);
 		}
-		data = apiData.acf
+		data = apiData.acf;
 	}
 	if (!data) {
 		throw new Error(`Kein Fallback Content für ${type}?id=${id} gefunden`);
 	}
 	return data;
 }
-export function usePageContent<K extends CmsContentType>(context: CmsRequestContext<K>) {
+export function usePageContent<K extends CmsContentType>(
+	context: CmsRequestContext<K>,
+) {
 	return use(fetchPageContentByFile<K>(context));
 }
 
 export async function getWordPressMediaById(
 	id: number,
 ): Promise<WordPressAttachment> {
-	let data: WordPressAttachment = mediaMetadata.filter(metadata => metadata.id === id)[0]
+	let data: WordPressAttachment = mediaMetadata.filter(
+		(metadata) => metadata.id === id,
+	)[0];
 	if (!getGitHubWorkflowBuild()) {
-
 		const res = await fetch(`${wordPressUrl}/media/${id}`);
 		if (!res.ok) {
 			throw new Error(`Fehler beim Laden von Media für ${id}`);

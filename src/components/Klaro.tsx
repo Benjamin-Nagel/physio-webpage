@@ -8,11 +8,10 @@ import "../../public/klaro.css";
 import type klaro from "klaro/dist/klaro-no-css";
 import { useEffect, useRef, useState } from "react";
 
-
 export interface KlaroConsentEvent extends Event {
-    detail: {
-        accepted: boolean;
-    };
+	detail: {
+		accepted: boolean;
+	};
 }
 
 type ExtendedCookie = {
@@ -108,6 +107,17 @@ export const cookieServices: CookieInformation = {
 			title: "Consent Manager",
 		},
 		{
+			callback: (consent, service) => {
+				console.log("event google: " + consent);
+				if (service && service.name === "google-maps") {
+					// Senden eines benutzerdefinierten Events, das React abfangen kann
+					document.dispatchEvent(
+						new CustomEvent("klaro-google-maps-consent", {
+							detail: { accepted: consent },
+						}),
+					);
+				}
+			},
 			contextualConsentOnly: false,
 			cookies: [],
 			default: false,
@@ -119,15 +129,6 @@ export const cookieServices: CookieInformation = {
 				dataPrivacyUrl: "",
 				description: "",
 				name: "",
-			},
-			callback: (consent, service) => {
-				console.log("event google: " + consent)
-				if (service && service.name === 'google-maps') {
-                // Senden eines benutzerdefinierten Events, das React abfangen kann
-					document.dispatchEvent(new CustomEvent('klaro-google-maps-consent', {
-						detail: { accepted: consent }
-					}));
-				}
 			},
 			purposes: ["functional"],
 			title: "Google Maps",
@@ -403,7 +404,7 @@ export default function CookieManager() {
 					border: "none",
 					borderRadius: "50%",
 					bottom: "18px",
-					boxShadow: "0 6px 18px rgba(0,0,0,0.18)",
+					boxShadow: "0 6px 18px rgba(44,63,110, 0.8)",
 					color: "#ffffff",
 					cursor: "pointer",
 					display: "inline-flex",
@@ -465,7 +466,7 @@ export default function CookieManager() {
 							transform: "translateX(-50%)",
 						}}
 					>
-						Läd…
+						Lädt
 					</span>
 				)}
 			</button>

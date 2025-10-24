@@ -1,6 +1,6 @@
+import Link from "next/link";
 import type { ReactElement } from "react";
 import type { GenericContentProps, GenericIcon } from "@/types/types";
-import Link from "next/link";
 
 type FeatureProps = GenericContentProps & {
 	icon?: GenericIcon;

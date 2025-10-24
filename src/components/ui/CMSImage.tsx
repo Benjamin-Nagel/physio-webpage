@@ -1,21 +1,18 @@
 import clsx from "clsx";
 import type { ReactElement } from "react";
-import { getWordPressMediaById } from "@/lib/fetchContent";
 import { getCmsMode, getNodeEnv } from "@/lib/environment";
-import Image from "next/image";
+import { getWordPressMediaById } from "@/lib/fetchContent";
 
 const isProd = process.env.NODE_ENV === "production";
-const isWorkflowBuild = process.env.WORKFLOW_BUILD || false
+const isWorkflowBuild = process.env.WORKFLOW_BUILD || false;
 
-let repoName = ""
+let repoName = "";
 if (isProd && isWorkflowBuild) {
-	const pageUrlParts = process.env.PAGE_URL?.split("/")
-	repoName = pageUrlParts[pageUrlParts.length - 1]
+	const pageUrlParts = process.env.PAGE_URL?.split("/");
+	repoName = pageUrlParts[pageUrlParts.length - 1];
 }
 
-const isStatic =
-	getNodeEnv() === "production" &&
-	getCmsMode() === "static";
+const isStatic = getNodeEnv() === "production" && getCmsMode() === "static";
 
 export type CMSImageProps = {
 	/** Die WordPress-Media-ID */
@@ -90,7 +87,9 @@ export async function CMSImage({
 		.map((img) => {
 			let myUrl = img.source_url;
 			if (isStatic) {
-				myUrl = ((isProd && isWorkflowBuild)?`/${repoName}` : '') + `/cms-images/${cmsAttachment.slug}/${img.file}`;
+				myUrl =
+					(isProd && isWorkflowBuild ? `/${repoName}` : "") +
+					`/cms-images/${cmsAttachment.slug}/${img.file}`;
 			}
 			return `${myUrl} ${img.width}w`;
 		})
@@ -101,7 +100,9 @@ export async function CMSImage({
 
 	let fallbackImageUrl = fallbackImage.source_url;
 	if (isStatic) {
-		fallbackImageUrl = ((isProd && isWorkflowBuild)?`/${repoName}` : '') + `/cms-images/${cmsAttachment.slug}/${fallbackImage.file}`;
+		fallbackImageUrl =
+			(isProd && isWorkflowBuild ? `/${repoName}` : "") +
+			`/cms-images/${cmsAttachment.slug}/${fallbackImage.file}`;
 	}
 
 	const altText = alt || cmsAttachment.alt_text || cmsAttachment.title.rendered;

@@ -1,17 +1,16 @@
-
 import type { FaqContent } from "@/types/types";
 
 export const faqs = [
-    {
-					id: 251,
-					question: "Was bringe ich mit?",
-					answer: `<ul>
+	{
+		answer: `<ul>
  	<li>Befund</li>
  	<li>Sportkleidung</li>
  	<li>Handtuch</li>
 </ul>`,
-					content: `Content`,
-					seo_title: "seo titel",
-					seo_description: "seo beschreibung"
-				}   
-] as const satisfies FaqContent[]; 
+		content: `Content`,
+		id: 251,
+		question: "Was bringe ich mit?",
+		seo_description: "seo beschreibung",
+		seo_title: "seo titel",
+	},
+] as const satisfies FaqContent[];

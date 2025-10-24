@@ -1,7 +1,7 @@
 import clsx from "clsx";
+import Link from "next/link";
 import type { GenericContentProps, GenericIcon } from "@/types/types";
 import { CMSImage, type CMSImageProps } from "./CMSImage";
-import Link from "next/link";
 
 export type GridElement = {
 	title: string;

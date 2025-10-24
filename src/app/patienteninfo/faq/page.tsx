@@ -6,13 +6,13 @@ import {
 import { MinusCircleIcon } from "@heroicons/react/20/solid";
 import { use } from "react";
 import { PageMiddleContent, PageWrapper } from "@/components/PageWrapper";
+import { faqs } from "@/data/faqs";
+import { getGitHubWorkflowBuild, getWordpressApiUrl } from "@/lib/environment";
 import type { WordPressAcfContent } from "@/lib/fetchContent";
 import type { FaqContent } from "@/types/types";
-import { getGitHubWorkflowBuild, getWordpressApiUrl } from "@/lib/environment";
-import { faqs } from "@/data/faqs";
 
 async function loadFaqs(): Promise<FaqContent[]> {
-	let data: FaqContent[] = faqs
+	let data: FaqContent[] = faqs;
 	if (!getGitHubWorkflowBuild()) {
 		const url = `${getWordpressApiUrl()}/faq`;
 		const res = await fetch(url);
@@ -20,7 +20,7 @@ async function loadFaqs(): Promise<FaqContent[]> {
 			throw new Error(`Fehler beim Laden von Content für faqs`);
 		}
 		const cmsResponse = (await res.json()) as WordPressAcfContent<FaqContent>[];
-		data = cmsResponse.map(entry => entry.acf)
+		data = cmsResponse.map((entry) => entry.acf);
 		if (!data) {
 			throw new Error(`Kein Content für faqs gefunden`);
 		}

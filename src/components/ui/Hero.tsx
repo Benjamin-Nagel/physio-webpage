@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import Image from "next/image";
+import Link from "next/link";
 import type { ReactElement } from "react";
 import type { GenericContentProps } from "@/types/types";
 import { CMSImage, type CMSImageProps } from "./CMSImage";
-import Link from "next/link";
 
 type HeroBase = GenericContentProps & {
 	headerLink?: {

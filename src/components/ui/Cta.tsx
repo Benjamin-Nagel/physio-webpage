@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import type { GenericContentProps } from "@/types/types";
 import Link from "next/link";
+import type { GenericContentProps } from "@/types/types";
 
 export type CTAProps = GenericContentProps & {
 	content?: string;
