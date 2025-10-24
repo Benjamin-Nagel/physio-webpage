@@ -60,7 +60,6 @@ export default function GoogleMapOfficial({
 			}
 
 			const updateConsent: EventListener = (event: Event) => {
-				console.log("event google [updateConsent]: " + event);
 				const customEvent = event as CustomEvent<{ accepted: boolean }>;
 				setIsAccepted(customEvent.detail.accepted);
 			};

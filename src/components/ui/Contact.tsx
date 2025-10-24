@@ -5,7 +5,7 @@ import {
 	PhoneIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { getPageUrl, getWordpressApiUrl } from "@/lib/environment";
+import { getPageUrl } from "@/lib/environment";
 import type { GenericContentProps } from "@/types/types";
 
 export type ContactProps = GenericContentProps & {

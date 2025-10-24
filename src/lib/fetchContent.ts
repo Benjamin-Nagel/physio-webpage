@@ -206,13 +206,7 @@ const cmsContentTypeMapper: {
 	treatments: treatments,
 };
 
-// type ContentTypeList = CmsContentKeyTypeMap[keyof CmsContentKeyTypeMap];
-type ContentTypeList =
-	| PageInformation
-	| Complaint
-	| FaqContent
-	| TeamMember
-	| Treatment;
+export type ContentTypeList = CmsContentKeyTypeMap[keyof CmsContentKeyTypeMap];
 
 const wordPressUrl = getWordpressApiUrl();
 

@@ -118,6 +118,15 @@ type WPFTeam = {
 	};
 };
 
+function parseIcon(icon: string) {
+	return icon.replace(/([a-zA-Z-]+)=/g, (match, p1) => {
+		if (p1.startsWith("aria-") || p1.startsWith("data-")) return match;
+
+		const camelCased = p1.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+		return `${camelCased}=`;
+	});
+}
+
 async function ensureDir(dir: string) {
 	await fs.promises.mkdir(dir, { recursive: true });
 }
@@ -242,7 +251,7 @@ export const complaints = [
           description: \`
             ${acf.description}
           \`,
-          icon: (${acf.icon}),
+          icon: (${parseIcon(acf.icon)}),
           treatments: [
             ${
 							acf.treatments !== undefined &&
@@ -288,7 +297,7 @@ export const treatments = [
           description: \`
             ${acf.description}
           \`,
-          icon: (${acf.icon}),
+          icon: (${parseIcon(acf.icon)}),
           complaints: [
             ${
 							acf.complaints !== undefined &&

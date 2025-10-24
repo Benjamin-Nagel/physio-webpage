@@ -108,7 +108,6 @@ export const cookieServices: CookieInformation = {
 		},
 		{
 			callback: (consent, service) => {
-				console.log("event google: " + consent);
 				if (service && service.name === "google-maps") {
 					// Senden eines benutzerdefinierten Events, das React abfangen kann
 					document.dispatchEvent(

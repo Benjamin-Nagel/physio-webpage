@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { webpageData } from "@/data/general-page-data";
 import { navigation } from "@/data/navigation";
 
@@ -215,11 +215,14 @@ export function Header() {
 															onClick={() => setOpenDropdown(null)}
 														>
 															{sub.icon && (
-																<span className="flex-shrink-0">
-																	{sub.icon}
+																<span className="shrink-0">
+																	{React.cloneElement(sub.icon, {
+																		height: 24,
+																		width: 24,
+																	})}
 																</span>
 															)}
-															{sub.name}
+															<span>{sub.name}</span>
 														</Link>
 													</li>
 												))}
@@ -235,9 +238,14 @@ export function Header() {
 										onClick={() => setOpenDropdown(null)}
 									>
 										{sub.icon && (
-											<span className="flex-shrink-0">{sub.icon}</span>
+											<span className="shrink-0">
+												{React.cloneElement(sub.icon, {
+													height: 24,
+													width: 24,
+												})}
+											</span>
 										)}
-										{sub.name}
+										<span>{sub.name}</span>
 									</Link>
 								))}
 					</div>
@@ -272,7 +280,12 @@ export function Header() {
 													onClick={() => setMobileOpen(false)}
 												>
 													{sub.icon && (
-														<span className="flex-shrink-0">{sub.icon}</span>
+														<span className="shrink-0">
+															{React.cloneElement(sub.icon, {
+																height: 24,
+																width: 24,
+															})}
+														</span>
 													)}
 													<span className="truncate">{sub.name}</span>
 												</Link>
