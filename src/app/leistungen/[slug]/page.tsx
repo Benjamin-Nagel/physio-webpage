@@ -167,8 +167,10 @@ export default function Leistung({ params }: LeistungParams) {
 									className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition"
 									key={offer.name}
 								>
-									<offer.icon className="w-10 h-10 text-indigo-600 mb-4" />
-									<h3 className="text-xl font-semibold mb-2">{offer.name}</h3>
+									<div className="flex columns-2 gap-2">
+										<offer.icon className="w-10 h-10 text-indigo-600 mb-4" />
+										<h3 className="text-xl font-semibold mb-2">{offer.name}</h3>
+									</div>
 									<p className="text-gray-600">{offer.description}</p>
 								</div>
 							))}
@@ -187,8 +189,10 @@ export default function Leistung({ params }: LeistungParams) {
 									className="flex flex-col items-start p-6 bg-gray-50 rounded-2xl shadow hover:shadow-lg transition"
 									key={step}
 								>
-									<Icon className="w-10 h-10 text-indigo-600 mb-4" />
-									<h3 className="text-xl font-semibold mb-2">{title}</h3>
+									<div className="flex columns-2 gap-2">
+										<Icon className="w-10 h-10 text-indigo-600 mb-4" />
+										<h3 className="text-xl font-semibold mb-2">{title}</h3>
+									</div>
 									<p className="text-gray-600">{description}</p>
 								</div>
 							))}
@@ -206,8 +210,10 @@ export default function Leistung({ params }: LeistungParams) {
 									className="flex flex-col items-start p-6 bg-white rounded-2xl shadow hover:shadow-lg transition"
 									key={title}
 								>
-									<Icon className="w-10 h-10 text-indigo-600 mb-4" />
-									<h3 className="text-xl font-semibold mb-2">{title}</h3>
+									<div className="flex columns-2 gap-2">
+										<Icon className="w-10 h-10 text-indigo-600 mb-4" />
+										<h3 className="text-xl font-semibold mb-2">{title}</h3>
+									</div>
 									<p className="text-gray-600">{description}</p>
 								</div>
 							))}

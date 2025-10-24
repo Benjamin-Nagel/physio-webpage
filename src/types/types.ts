@@ -87,7 +87,8 @@ export type PageInformation = GenericAcfContent & {
 	hero_title?: string;
 	hero_text?: string;
 	hero_image?: number;
-	content: string;
+	content_title?: string;
+	content?: string;
 	cta_text?: string;
 	cta_link?: string;
 };

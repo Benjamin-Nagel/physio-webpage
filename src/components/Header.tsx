@@ -235,7 +235,7 @@ export function Header() {
 							: activeItem && (
 									<>
 										<Link
-											className="flex col-span-full text-bold items-center gap-2 rounded px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
+											className="flex col-span-full font-bold items-center gap-2 rounded px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
 											href={activeItem.href ?? "#"}
 											onClick={() => setOpenDropdown(null)}
 										>

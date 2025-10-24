@@ -103,15 +103,21 @@ export default function GoogleMapOfficial({
 					/>
 				)}
 				<p
-					onClick={() => {
-						klaro.show(klaroConfig);
-					}}
 					style={{ marginTop: "10px", textAlign: "center" }}
 				>
 					Um die Google-Karte anzuzeigen, müssen Sie der Verwendung von Google
 					Maps im Rahmen unserer Datenschutzeinstellungen zustimmen.
 				</p>
 				{/* Optional: Link/Button, der das Klaro-Fenster öffnet */}
+				<button
+					className="my-4 rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					onClick={() => {
+						klaro.show(klaroConfig);
+					}}
+					type="button"
+				>
+					Datenschutzeinstellungen öffnen 
+				</button>
 			</div>
 		);
 	}

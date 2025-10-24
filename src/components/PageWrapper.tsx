@@ -51,6 +51,7 @@ export function PageWrapper({ context, children }: PageWrapperProps) {
 		hero_title,
 		hero_image,
 		hero_text,
+		content_title,
 		content,
 		cta_text,
 		cta_link,
@@ -68,17 +69,17 @@ export function PageWrapper({ context, children }: PageWrapperProps) {
 						</Hero>
 					)}
 			{top}
-			{content && (
-				<Text headline="as">
+			{content_title && content && (
+				<Text headline={content_title}>
 					<div dangerouslySetInnerHTML={{ __html: content }}></div>
 				</Text>
 			)}
 			{middle}
 			{cta_text && cta_link && (
 				<CTA
-					button={{ href: cta_link, title: "b" }}
+					button={{ href: cta_link, title: "Mehr" }}
 					content={cta_text}
-					headline="a"
+					headline="MISSING"
 				/>
 			)}
 			{bottom}

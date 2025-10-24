@@ -33,7 +33,7 @@ export function Grid({ headline, style = "light", elements }: GridProps) {
 							{element.icon && (
 								<element.icon className="w-10 h-10 text-indigo-600 mb-4" />
 							)}
-							<h3 className="text-xl font-semibold mb-2">{element.title}</h3>
+							<h3 className="text-xl font-semibold my-2">{element.title}</h3>
 							<p className="text-gray-600">{element.description}</p>
 							{element.link && (
 								<div className="mt-2">
