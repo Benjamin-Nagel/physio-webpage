@@ -193,61 +193,76 @@ export function Header() {
 				>
 					<div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-6">
 						{openDropdown === "Mehr"
-							? condensedItems.map((group) => (
-									<div className="space-y-3" key={group.name}>
+							? condensedItems.map((item) => (
+									<div className="space-y-3" key={item.name}>
 										{/* Haupteintrag */}
 										<Link
 											className="block font-semibold text-gray-900 hover:text-indigo-600"
-											href={group.href ?? "#"}
+											href={item.href ?? "#"}
 											onClick={() => setOpenDropdown(null)}
 										>
-											{group.name}
+											{item.name}
 										</Link>
 
 										{/* Untereinträge */}
-										{group.children && (
+										{item.children && (
 											<ul className="space-y-1">
-												{group.children.map((sub) => (
-													<li key={sub.name}>
-														<Link
-															className="flex items-center gap-2 rounded px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
-															href={sub.href}
-															onClick={() => setOpenDropdown(null)}
-														>
-															{sub.icon && (
-																<span className="shrink-0">
-																	{React.cloneElement(sub.icon, {
-																		height: 24,
-																		width: 24,
-																	})}
-																</span>
-															)}
-															<span>{sub.name}</span>
-														</Link>
-													</li>
-												))}
+												{item.children
+													.sort((e1, e2) => (e1.name > e2.name ? 1 : -1))
+													.map((sub) => (
+														<li key={sub.name}>
+															<Link
+																className="flex items-center gap-2 rounded px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
+																href={sub.href}
+																onClick={() => setOpenDropdown(null)}
+															>
+																{sub.icon && (
+																	<span className="shrink-0">
+																		{React.cloneElement(sub.icon, {
+																			height: 24,
+																			width: 24,
+																		})}
+																	</span>
+																)}
+																<span>{sub.name}</span>
+															</Link>
+														</li>
+													))}
 											</ul>
 										)}
 									</div>
 								))
-							: activeItem?.children?.map((sub) => (
-									<Link
-										className="flex items-center gap-2 rounded px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
-										href={sub.href}
-										key={sub.name}
-										onClick={() => setOpenDropdown(null)}
-									>
-										{sub.icon && (
-											<span className="shrink-0">
-												{React.cloneElement(sub.icon, {
-													height: 24,
-													width: 24,
-												})}
-											</span>
-										)}
-										<span>{sub.name}</span>
-									</Link>
-								))}
+							: activeItem && (
+									<>
+										<Link
+											className="flex col-span-full text-bold items-center gap-2 rounded px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
+											href={activeItem.href ?? "#"}
+											onClick={() => setOpenDropdown(null)}
+										>
+											{activeItem.name}
+										</Link>
+										{activeItem.children
+											?.sort((e1, e2) => (e1.name > e2.name ? 1 : -1))
+											.map((sub) => (
+												<Link
+													className="flex items-center gap-2 rounded px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
+													href={sub.href}
+													key={sub.name}
+													onClick={() => setOpenDropdown(null)}
+												>
+													{sub.icon && (
+														<span className="shrink-0">
+															{React.cloneElement(sub.icon, {
+																height: 24,
+																width: 24,
+															})}
+														</span>
+													)}
+													<span>{sub.name}</span>
+												</Link>
+											))}
+									</>
+								)}
 					</div>
 				</div>
 			)}
@@ -272,25 +287,27 @@ export function Header() {
 								</Link>
 								{item.children && (
 									<ul className="ml-4 mt-1 space-y-1 border-l border-gray-100 pl-3">
-										{item.children.map((sub) => (
-											<li key={sub.name}>
-												<Link
-													className="flex items-center gap-2 px-2 py-1 text-sm text-gray-700 hover:text-indigo-600"
-													href={sub.href}
-													onClick={() => setMobileOpen(false)}
-												>
-													{sub.icon && (
-														<span className="shrink-0">
-															{React.cloneElement(sub.icon, {
-																height: 24,
-																width: 24,
-															})}
-														</span>
-													)}
-													<span className="truncate">{sub.name}</span>
-												</Link>
-											</li>
-										))}
+										{item.children
+											.sort((e1, e2) => (e1.name > e2.name ? 1 : -1))
+											.map((sub) => (
+												<li key={sub.name}>
+													<Link
+														className="flex items-center gap-2 px-2 py-1 text-sm text-gray-700 hover:text-indigo-600"
+														href={sub.href}
+														onClick={() => setMobileOpen(false)}
+													>
+														{sub.icon && (
+															<span className="shrink-0">
+																{React.cloneElement(sub.icon, {
+																	height: 24,
+																	width: 24,
+																})}
+															</span>
+														)}
+														<span className="truncate">{sub.name}</span>
+													</Link>
+												</li>
+											))}
 									</ul>
 								)}
 							</li>

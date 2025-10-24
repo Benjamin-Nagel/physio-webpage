@@ -12,8 +12,12 @@ function getSubNavigation(url: string): SubNavigationEntry[] {
 }
 
 export function Footer() {
-	const treatments: SubNavigationEntry[] = getSubNavigation("/leistungen");
-	const complaints: SubNavigationEntry[] = getSubNavigation("/beschwerden");
+	const treatments: SubNavigationEntry[] = getSubNavigation("/leistungen").sort(
+		(e1, e2) => (e1.name > e2.name ? 1 : -1),
+	);
+	const complaints: SubNavigationEntry[] = getSubNavigation(
+		"/beschwerden",
+	).sort((e1, e2) => (e1.name > e2.name ? 1 : -1));
 	const patientenInformationen: SubNavigationEntry[] =
 		getSubNavigation("/patienteninfo");
 	const aboutUs: SubNavigationEntry[] = getSubNavigation("/ueber-uns");
