@@ -6,6 +6,7 @@ import { Header } from "@/components/Header";
 import CookieManager from "@/components/Klaro";
 import { SeoStructuredData } from "@/components/seo/SeoStructuredData";
 import { baseMetadata } from "@/data/seo";
+import clsx from "clsx";
 
 const Footer = dynamic(() =>
 	import("@/components/Footer").then((block) => block.Footer),
@@ -31,9 +32,9 @@ export default function RootLayout({
 	return (
 		<html lang="de">
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+				className={clsx(`${geistSans.variable} ${geistMono.variable} antialiased`, "bg-white dark:bg-gray-800")}
 			>
-				<div className="bg-white">
+				<div>
 					<Header />
 					<main>{children}</main>
 					<Footer />
