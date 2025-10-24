@@ -119,10 +119,12 @@ type WPFTeam = {
 };
 
 function parseIcon(icon: string) {
-	return icon.replace(/([a-zA-Z-]+)=/g, (match, p1) => {
+	return icon.replace(/([a-zA-Z-]+)=/g, (match: string, p1: string) => {
 		if (p1.startsWith("aria-") || p1.startsWith("data-")) return match;
 
-		const camelCased = p1.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+		const camelCased = p1.replace(/-([a-z])/g, (_: string, c: string) =>
+			c.toUpperCase(),
+		);
 		return `${camelCased}=`;
 	});
 }
