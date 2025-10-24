@@ -35,7 +35,7 @@ jobs:
       - name: Build and Export Next.js
         run: npm run build
         env:
-          PAGE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+          PAGE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
           WORDPRESS_API_URL: ${{ secrets.WORDPRESS_API_URL }}
           WORKFLOW_BUILD: "true"
           NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
