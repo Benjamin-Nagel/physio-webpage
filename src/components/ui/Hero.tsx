@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { ReactElement } from "react";
 import type { GenericContentProps } from "@/types/types";
 import { CMSImage, type CMSImageProps } from "./CMSImage";
+import Link from "next/link";
 
 type HeroBase = GenericContentProps & {
 	headerLink?: {
@@ -51,12 +52,12 @@ export function Hero({
 								className="h-10 w-auto rounded"
 								src={headerLink.image.url}
 							/>
-							<a
+							<Link
 								className="text-sm font-semibold text-indigo-600 hover:underline"
 								href={headerLink.link}
 							>
 								{headerLink.text}
-							</a>
+							</Link>
 						</div>
 					)}
 

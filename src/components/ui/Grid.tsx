@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import type { GenericContentProps, GenericIcon } from "@/types/types";
 import { CMSImage, type CMSImageProps } from "./CMSImage";
+import Link from "next/link";
 
 export type GridElement = {
 	title: string;
@@ -36,12 +37,12 @@ export function Grid({ headline, style = "light", elements }: GridProps) {
 							<p className="text-gray-600">{element.description}</p>
 							{element.link && (
 								<div className="mt-2">
-									<a
+									<Link
 										className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 										href={element.link.href}
 									>
 										{element.link.title}
-									</a>
+									</Link>
 								</div>
 							)}
 						</div>

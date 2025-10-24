@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import type { GenericContentProps } from "@/types/types";
+import Link from "next/link";
 
 export type CTAProps = GenericContentProps & {
 	content?: string;
@@ -33,19 +34,19 @@ export function CTA({
 						</p>
 					)}
 					<div className="mt-10 flex items-center justify-center gap-x-6">
-						<a
+						<Link
 							className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 							href={button.href}
 						>
 							{button.title}
-						</a>
+						</Link>
 						{link && (
-							<a
+							<Link
 								className="text-sm font-semibold leading-6 text-gray-900"
 								href={link.href}
 							>
 								{link.title} <span aria-hidden="true">→</span>
-							</a>
+							</Link>
 						)}
 					</div>
 				</div>

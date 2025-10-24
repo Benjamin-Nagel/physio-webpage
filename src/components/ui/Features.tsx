@@ -1,5 +1,6 @@
 import type { ReactElement } from "react";
 import type { GenericContentProps, GenericIcon } from "@/types/types";
+import Link from "next/link";
 
 type FeatureProps = GenericContentProps & {
 	icon?: GenericIcon;
@@ -36,12 +37,12 @@ export function Feature({
 				<div className="flex-auto">{children}</div>
 				{href && (
 					<p className="mt-6">
-						<a
+						<Link
 							className="text-sm font-semibold leading-6 text-indigo-600"
 							href={href}
 						>
 							{linkText} <span aria-hidden="true">→</span>
-						</a>
+						</Link>
 					</p>
 				)}
 			</dd>

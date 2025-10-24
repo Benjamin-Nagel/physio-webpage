@@ -125,12 +125,12 @@ export function Header() {
 											role="menu"
 										>
 											<div>
-												<a
+												<Link
 													className="block px-6 py-4 text-m font-semibold text-gray-800 hover:bg-gray-50"
 													href={item.href}
 												>
 													{item.name} – Übersicht
-												</a>
+												</Link>
 											</div>
 											<div>
 												<hr className="border-gray-100 my-1" />
@@ -139,7 +139,7 @@ export function Header() {
 												className={getFlyoutLayoutClasses(item.children.length)}
 											>
 												{item.children.map((sub) => (
-													<a
+													<Link
 														className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-indigo-600 rounded"
 														href={sub.href}
 														key={sub.name}
@@ -148,19 +148,19 @@ export function Header() {
 															<span className="flex-shrink-0">{sub.icon}</span>
 														)}
 														{sub.name}
-													</a>
+													</Link>
 												))}
 											</div>
 										</div>
 									)}
 								</div>
 							) : (
-								<a
+								<Link
 									className="rounded-md px-2 py-1 text-gray-700 hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
 									href={item.href}
 								>
 									{item.name}
-								</a>
+								</Link>
 							)}
 						</li>
 					))}
@@ -178,18 +178,18 @@ export function Header() {
 					<ul className="px-4 py-3 space-y-2">
 						{navigation.map((item) => (
 							<li key={item.name}>
-								<a
+								<Link
 									className="block px-2 py-2 text-gray-800 hover:bg-gray-100 rounded-md"
 									href={item.href}
 									onClick={() => setMobileOpen(false)}
 								>
 									{item.name}
-								</a>
+								</Link>
 								{item.children && (
 									<ul className="ml-4 mt-1 space-y-1 border-l border-gray-100 pl-3">
 										{item.children.map((sub) => (
 											<li key={sub.name}>
-												<a
+												<Link
 													className="flex items-center gap-2 px-2 py-1 text-sm text-gray-700 hover:text-indigo-600"
 													href={sub.href}
 													onClick={() => setMobileOpen(false)}
@@ -198,7 +198,7 @@ export function Header() {
 														<span className="flex-shrink-0">{sub.icon}</span>
 													)}
 													<span className="truncate text-wrap">{sub.name}</span>
-												</a>
+												</Link>
 											</li>
 										))}
 									</ul>
