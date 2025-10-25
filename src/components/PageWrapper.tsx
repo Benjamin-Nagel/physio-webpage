@@ -1,6 +1,8 @@
 import React, { type ReactElement } from "react";
 import { type CmsRequestContext, usePageContent } from "@/lib/fetchContent";
 import type { PageInformation } from "@/types/types";
+import { PageWrapperInformationButton } from "./PageWrapperInformationButton";
+import { contentTypeInformationWrapperHelper } from "./PageWrapperInformationHelper";
 import { CTA } from "./ui/Cta";
 import { Hero, type HeroProps } from "./ui/Hero";
 import { Text } from "./ui/Text";
@@ -56,25 +58,85 @@ export function PageWrapper({ context, children }: PageWrapperProps) {
 		cta_text,
 		cta_link,
 	} = pageContent;
+
+	const pageColor = "#b300b3";
+	const heroComponentInformation = contentTypeInformationWrapperHelper({
+		color: pageColor,
+		wrapperContent: {
+			content: "Keine Ahnung",
+			id: context.id,
+			type: "Seite",
+		},
+	});
+	const staticPageContent = "#808080";
+	const staticTopInformation = contentTypeInformationWrapperHelper({
+		color: staticPageContent,
+		wrapperContent: {
+			content: "Top",
+			id: context.id,
+			type: "Seite",
+		},
+	});
+	const staticMiddleInformation = contentTypeInformationWrapperHelper({
+		color: staticPageContent,
+		wrapperContent: {
+			content: "Middle",
+			id: context.id,
+			type: "Seite",
+		},
+	});
+	const staticBottomInformation = contentTypeInformationWrapperHelper({
+		color: staticPageContent,
+		wrapperContent: {
+			content: "Bottom",
+			id: context.id,
+			type: "Seite",
+		},
+	});
+
 	return (
 		<>
 			{heroOverride
 				? heroOverride
 				: hero_image && (
 						<Hero
+							blockStyles={heroComponentInformation.blockStyles}
+							editorHintComponent={heroComponentInformation.editorHintComponent}
 							headline={hero_title || title}
 							image={{ cmsImageId: hero_image }}
+							wrapperColor={heroComponentInformation.color}
 						>
 							<p>{hero_text}</p>
 						</Hero>
 					)}
-			{top}
+			{staticTopInformation.editorHintComponent ? (
+				<div
+					className={"editor-highlight"}
+					style={staticTopInformation.blockStyles}
+				>
+					{top && staticTopInformation.editorHintComponent}
+					{top}
+				</div>
+			) : (
+				{ top }
+			)}
+
 			{content_title && content && (
 				<Text headline={content_title}>
 					<div dangerouslySetInnerHTML={{ __html: content }}></div>
 				</Text>
 			)}
-			{middle}
+			{staticMiddleInformation.editorHintComponent ? (
+				<div
+					className={"editor-highlight"}
+					style={staticMiddleInformation.blockStyles}
+				>
+					{middle && staticMiddleInformation.editorHintComponent}
+					{middle}
+				</div>
+			) : (
+				{ middle }
+			)}
 			{cta_text && cta_link && (
 				<CTA
 					button={{ href: cta_link, title: "Mehr" }}
@@ -82,7 +144,18 @@ export function PageWrapper({ context, children }: PageWrapperProps) {
 					headline="MISSING"
 				/>
 			)}
-			{bottom}
+			{staticBottomInformation.editorHintComponent ? (
+				<div
+					className={"editor-highlight"}
+					style={staticBottomInformation.blockStyles}
+				>
+					{bottom && staticBottomInformation.editorHintComponent}
+					{bottom}
+				</div>
+			) : (
+				{ bottom }
+			)}
+			<PageWrapperInformationButton />
 		</>
 	);
 }
