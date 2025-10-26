@@ -106,7 +106,7 @@ export default function Home() {
 						.map(({ name, short_description, image, slug }) => {
 							return {
 								description: short_description,
-								//icon: icon,
+								icon: ArrowPathIcon,
 								image: {
 									cmsImageId: image,
 								},

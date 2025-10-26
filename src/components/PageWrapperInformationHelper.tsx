@@ -1,19 +1,19 @@
 import dynamic from "next/dynamic";
-import type { JSX } from "react";
+import React from "react";
 import type { ContentTypeInformationWrapperProps } from "@/components/PageWrapperInformationButton";
 import { getNodeEnv } from "@/lib/environment";
 
 const isDevelopment = getNodeEnv() === "development";
 
-export type ContentInformationType = {
-	wrapperColor?: string;
-	blockStyles?: React.CSSProperties;
-	editorHintComponent?: JSX.Element | undefined;
-};
-
+type PreFilledContentTypeInformationProps = Omit<
+	ContentTypeInformationWrapperProps,
+	"type" | "id" | "content"
+>;
 export type ContentTypeInformationParts = {
 	color: string;
-	editorHintComponent: JSX.Element | undefined;
+	EditorHintComponent:
+		| React.ComponentType<PreFilledContentTypeInformationProps>
+		| undefined;
 	blockStyles: React.CSSProperties;
 	development: boolean;
 };
@@ -27,7 +27,9 @@ export function contentTypeInformationWrapperHelper({
 }): ContentTypeInformationParts {
 	const editorOverlayColor = color;
 
-	let EditorHint: JSX.Element | undefined;
+	let EditorHint:
+		| React.ComponentType<PreFilledContentTypeInformationProps>
+		| undefined;
 	if (isDevelopment) {
 		const ContentTypeInformationWrapper = dynamic(() =>
 			import("@/components/PageWrapperInformationButton").then(
@@ -35,7 +37,13 @@ export function contentTypeInformationWrapperHelper({
 			),
 		);
 
-		EditorHint = <ContentTypeInformationWrapper {...wrapperContent} />;
+		EditorHint = React.memo(function Wrapper(
+			overrideProps: PreFilledContentTypeInformationProps,
+		) {
+			return (
+				<ContentTypeInformationWrapper {...overrideProps} {...wrapperContent} />
+			);
+		});
 	}
 	const blockStyles = {
 		"--editor-border-color": editorOverlayColor,
@@ -44,6 +52,6 @@ export function contentTypeInformationWrapperHelper({
 		blockStyles,
 		color,
 		development: isDevelopment,
-		editorHintComponent: EditorHint,
+		EditorHintComponent: EditorHint,
 	};
 }

@@ -1,161 +1,20 @@
 "use client";
 import { ShieldCheckIcon } from "@heroicons/react/24/outline";
-import type { KlaroConfig, Service } from "klaro/dist/klaro-no-css";
+import type { KlaroConfig } from "klaro/dist/klaro-no-css";
 import "../../public/klaro.css";
 
 // import Klaro without CSS
 
 import type klaro from "klaro/dist/klaro-no-css";
 import { useEffect, useRef, useState } from "react";
+import { webpageData } from "@/data/general-page-data";
+import { ProviderEntry, type ServiceEntry } from "@/types/types";
 
 export interface KlaroConsentEvent extends Event {
 	detail: {
 		accepted: boolean;
 	};
 }
-
-type ExtendedCookie = {
-	name: string;
-	description: string;
-	lifeTime: string;
-	type: string;
-	hosts: string;
-};
-
-type ServiceEntry = Omit<Service, "cookies"> & {
-	hosts: string;
-	provider: {
-		name: string;
-		description: string;
-		address: string;
-		cookieUrl: string;
-		dataPrivacyUrl: string;
-	};
-	cookies?: ExtendedCookie[];
-};
-type ProviderEntry = Omit<Service, "cookies"> & {
-	hosts: string;
-	provider: {
-		name: string;
-		description: string;
-		address: string;
-		cookieUrl: string;
-		dataPrivacyUrl: string;
-	};
-};
-
-type CookieInformation = {
-	services: ServiceEntry[];
-	providers: ProviderEntry[];
-};
-
-export const cookieServices: CookieInformation = {
-	providers: [],
-	services: [
-		{
-			cookies: [
-				// A list of regex expressions or strings giving the names of
-				// cookies set by this service. If the user withdraws consent for a
-				// given service, Klaro will then automatically delete all matching
-				// cookies.
-
-				// you can also explicitly provide a path and a domain for
-				// a given cookie. This is necessary if you have services that
-				// set cookies for a path that is not "/" or a domain that
-				// is not the current domain. If you do not set these values
-				// properly, the cookie can't be deleted by Klaro
-				// (there is no way to access the path or domain of a cookie in JS)
-				// Notice that it is not possible to delete cookies that were set
-				// on a third-party domain! See the note at mdn:
-				// https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie#new-cookie_domain
-				// [/^_pk_.*$/, '/', 'klaro.kiprotect.com'], //for the production version
-				// [/^_pk_.*$/, '/', 'localhost'], //for the local version
-				{
-					description: "",
-					hosts: "",
-					lifeTime: "",
-					name: "klaro",
-					type: "http",
-				},
-			],
-
-			// If "default" is set to true, the service will be enabled by default
-			// Overwrites global "default" setting.
-			// We recommend leaving this to "false" for services that collect
-			// personal information.
-			default: true,
-
-			description: "asdasdsds",
-
-			hosts: "",
-			// Each service should have a unique (and short) name.
-			name: "consent",
-			provider: {
-				address: "",
-				cookieUrl: "",
-				dataPrivacyUrl: "",
-				description: "",
-				name: "",
-			},
-
-			// The purpose(s) of this service. Will be listed on the consent notice.
-			// Do not forget to add translations for all purposes you list here.
-			purposes: ["functional"],
-			required: true,
-
-			// The title of your service as listed in the consent modal.
-			title: "Consent Manager",
-		},
-		{
-			callback: (consent, service) => {
-				if (service && service.name === "google-maps") {
-					// Senden eines benutzerdefinierten Events, das React abfangen kann
-					document.dispatchEvent(
-						new CustomEvent("klaro-google-maps-consent", {
-							detail: { accepted: consent },
-						}),
-					);
-				}
-			},
-			contextualConsentOnly: false,
-			cookies: [],
-			default: false,
-			hosts: "",
-			name: "google-maps",
-			provider: {
-				address: "",
-				cookieUrl: "",
-				dataPrivacyUrl: "",
-				description: "",
-				name: "",
-			},
-			purposes: ["functional"],
-			title: "Google Maps",
-		},
-		{
-			cookies: [
-				{
-					description: "",
-					hosts: "",
-					lifeTime: "",
-					name: "external-tracker",
-					type: "http",
-				},
-			],
-			hosts: "",
-			name: "externalTracker",
-			provider: {
-				address: "",
-				cookieUrl: "",
-				dataPrivacyUrl: "",
-				description: "",
-				name: "",
-			},
-			purposes: ["analytics", "security"],
-			title: "External Tracker",
-		},
-	],
-};
 
 export const klaroConfig: KlaroConfig = {
 	// Show "accept all" to accept all services instead of "ok" that only accepts
@@ -239,11 +98,12 @@ export const klaroConfig: KlaroConfig = {
 	noticeAsModal: false,
 
 	// This is a list of third-party services that Klaro will manage for you.
-	services: cookieServices.services.map(
-		({ cookies, ...rest }: ServiceEntry) => ({
-			cookies: cookies?.map((cookie) => cookie.name),
-			...rest,
-		}),
+	services: webpageData.cookieInformation.services.map(
+		({ cookies, ...rest }: ServiceEntry) =>
+			({
+				cookies: cookies?.map((cookie) => cookie.name),
+				...rest,
+			}) satisfies klaro.Service,
 	),
 
 	// You can show a description in contextual consent overlays for store

@@ -1,4 +1,5 @@
-import React, { type ReactElement } from "react";
+import clsx from "clsx";
+import React, { type ReactElement, type ReactNode } from "react";
 import { type CmsRequestContext, usePageContent } from "@/lib/fetchContent";
 import type { PageInformation } from "@/types/types";
 import { PageWrapperInformationButton } from "./PageWrapperInformationButton";
@@ -34,20 +35,30 @@ export type PageWrapperProps = {
 		| ReactElement<PagePositionContentProps>[];
 };
 
+function getChildrenByArea<P extends { children?: ReactNode }>(
+	children: ReactNode,
+	element: React.JSXElementConstructor<P>,
+): ReactElement<P> | undefined {
+	const found = React.Children.toArray(children).find(
+		(child): child is ReactElement<P> =>
+			React.isValidElement(child) && child.type === element,
+	);
+
+	if (!found) return undefined;
+
+	// Jetzt weiß TypeScript: props hat garantiert children
+	const hasContent = React.Children.count(found.props.children) > 0;
+
+	return hasContent ? found : undefined;
+}
+
 export function PageWrapper({ context, children }: PageWrapperProps) {
 	const pageContent: PageInformation = usePageContent<"my-page">(context);
-	const heroOverride = React.Children.toArray(children).find(
-		(child) => (child as ReactElement).type === HeroOverrideContent,
-	);
-	const top = React.Children.toArray(children).find(
-		(child) => (child as ReactElement).type === PageTopContent,
-	);
-	const middle = React.Children.toArray(children).find(
-		(child) => (child as ReactElement).type === PageMiddleContent,
-	);
-	const bottom = React.Children.toArray(children).find(
-		(child) => (child as ReactElement).type === PageBottomContent,
-	);
+	const allChildren = React.Children.toArray(children);
+	const heroOverride = getChildrenByArea(allChildren, HeroOverrideContent);
+	const top = getChildrenByArea(allChildren, PageTopContent);
+	const middle = getChildrenByArea(allChildren, PageMiddleContent);
+	const bottom = getChildrenByArea(allChildren, PageBottomContent);
 	const {
 		title,
 		hero_title,
@@ -63,18 +74,27 @@ export function PageWrapper({ context, children }: PageWrapperProps) {
 	const heroComponentInformation = contentTypeInformationWrapperHelper({
 		color: pageColor,
 		wrapperContent: {
-			content: "Keine Ahnung",
+			content: "Hero",
 			id: context.id,
-			type: "Seite",
+			type: "page",
 		},
 	});
+	const ctaInformation = contentTypeInformationWrapperHelper({
+		color: pageColor,
+		wrapperContent: {
+			content: "CTA",
+			id: context.id,
+			type: "page",
+		},
+	});
+
 	const staticPageContent = "#808080";
 	const staticTopInformation = contentTypeInformationWrapperHelper({
 		color: staticPageContent,
 		wrapperContent: {
 			content: "Top",
 			id: context.id,
-			type: "Seite",
+			type: "page",
 		},
 	});
 	const staticMiddleInformation = contentTypeInformationWrapperHelper({
@@ -82,7 +102,7 @@ export function PageWrapper({ context, children }: PageWrapperProps) {
 		wrapperContent: {
 			content: "Middle",
 			id: context.id,
-			type: "Seite",
+			type: "page",
 		},
 	});
 	const staticBottomInformation = contentTypeInformationWrapperHelper({
@@ -90,7 +110,7 @@ export function PageWrapper({ context, children }: PageWrapperProps) {
 		wrapperContent: {
 			content: "Bottom",
 			id: context.id,
-			type: "Seite",
+			type: "page",
 		},
 	});
 
@@ -100,25 +120,37 @@ export function PageWrapper({ context, children }: PageWrapperProps) {
 				? heroOverride
 				: hero_image && (
 						<Hero
-							blockStyles={heroComponentInformation.blockStyles}
-							editorHintComponent={heroComponentInformation.editorHintComponent}
+							blockStyles={
+								heroComponentInformation.development
+									? heroComponentInformation.blockStyles
+									: undefined
+							}
+							EditorHintComponent={
+								heroComponentInformation.development
+									? heroComponentInformation.EditorHintComponent
+									: undefined
+							}
 							headline={hero_title || title}
 							image={{ cmsImageId: hero_image }}
-							wrapperColor={heroComponentInformation.color}
+							wrapperColor={
+								heroComponentInformation.development
+									? heroComponentInformation.color
+									: undefined
+							}
 						>
 							<p>{hero_text}</p>
 						</Hero>
 					)}
-			{staticTopInformation.editorHintComponent ? (
+			{staticTopInformation.EditorHintComponent ? (
 				<div
-					className={"editor-highlight"}
+					className={clsx(top === undefined ? "h-16" : "", "editor-highlight")}
 					style={staticTopInformation.blockStyles}
 				>
-					{top && staticTopInformation.editorHintComponent}
+					<staticTopInformation.EditorHintComponent />
 					{top}
 				</div>
 			) : (
-				{ top }
+				[top]
 			)}
 
 			{content_title && content && (
@@ -126,36 +158,53 @@ export function PageWrapper({ context, children }: PageWrapperProps) {
 					<div dangerouslySetInnerHTML={{ __html: content }}></div>
 				</Text>
 			)}
-			{staticMiddleInformation.editorHintComponent ? (
+			{staticMiddleInformation.EditorHintComponent ? (
 				<div
-					className={"editor-highlight"}
+					className={clsx(
+						middle === undefined ? "h-16" : "",
+						"editor-highlight",
+					)}
 					style={staticMiddleInformation.blockStyles}
 				>
-					{middle && staticMiddleInformation.editorHintComponent}
+					<staticMiddleInformation.EditorHintComponent />
 					{middle}
 				</div>
 			) : (
-				{ middle }
+				[middle]
 			)}
 			{cta_text && cta_link && (
 				<CTA
+					blockStyles={
+						ctaInformation.development ? ctaInformation.blockStyles : undefined
+					}
 					button={{ href: cta_link, title: "Mehr" }}
 					content={cta_text}
+					EditorHintComponent={
+						ctaInformation.development
+							? ctaInformation.EditorHintComponent
+							: undefined
+					}
 					headline="MISSING"
+					wrapperColor={
+						ctaInformation.development ? ctaInformation.color : undefined
+					}
 				/>
 			)}
-			{staticBottomInformation.editorHintComponent ? (
+			{staticBottomInformation.EditorHintComponent ? (
 				<div
-					className={"editor-highlight"}
+					className={clsx(
+						bottom === undefined ? "h-16" : "",
+						"editor-highlight",
+					)}
 					style={staticBottomInformation.blockStyles}
 				>
-					{bottom && staticBottomInformation.editorHintComponent}
+					{<staticBottomInformation.EditorHintComponent />}
 					{bottom}
 				</div>
 			) : (
-				{ bottom }
+				[bottom]
 			)}
-			<PageWrapperInformationButton />
+			<PageWrapperInformationButton pageId={context.id} />
 		</>
 	);
 }

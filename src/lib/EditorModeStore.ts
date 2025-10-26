@@ -57,7 +57,9 @@ class EditorModeStore {
 		if (this.isEditorMode !== newMode) {
 			this.isEditorMode = newMode;
 			// Benachrichtigung aller Abonnenten
-			this.listeners.forEach((callback) => {callback(this.isEditorMode)});
+			this.listeners.forEach((callback) => {
+				callback(this.isEditorMode);
+			});
 		}
 	}
 

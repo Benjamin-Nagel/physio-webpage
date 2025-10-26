@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { PageMiddleContent, PageWrapper } from "@/components/PageWrapper";
+import { generateSimpleMetadata } from "@/data/seo";
+
+export async function generateMetadata(): Promise<Metadata> {
+	return generateSimpleMetadata("Ersttermin");
+}
 
 export default function ErstTermin() {
 	return (

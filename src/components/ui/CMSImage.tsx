@@ -7,9 +7,10 @@ const isProd = process.env.NODE_ENV === "production";
 const isWorkflowBuild = process.env.WORKFLOW_BUILD || false;
 
 let repoName = "";
-if (isProd && isWorkflowBuild) {
-	const pageUrlParts = process.env.PAGE_URL?.split("/");
-	repoName = pageUrlParts[pageUrlParts.length - 1];
+if (isProd && isWorkflowBuild && process.env.PAGE_URL !== undefined) {
+	const url = new URL(process.env.PAGE_URL);
+	const pathName = url.pathname;
+	repoName = pathName.substring(1, pathName.length);
 }
 
 const isStatic = getNodeEnv() === "production" && getCmsMode() === "static";
@@ -17,6 +18,8 @@ const isStatic = getNodeEnv() === "production" && getCmsMode() === "static";
 export type CMSImageProps = {
 	/** Die WordPress-Media-ID */
 	cmsImageId: number;
+
+	containerClassName?: string;
 
 	/** Tailwind Klassen oder eigene Styles */
 	className?: string;
@@ -48,6 +51,7 @@ export type CMSImageProps = {
  */
 export async function CMSImage({
 	cmsImageId,
+	containerClassName,
 	className,
 	alt,
 	rounded = false,
@@ -88,7 +92,7 @@ export async function CMSImage({
 			let myUrl = img.source_url;
 			if (isStatic) {
 				myUrl =
-					(isProd && isWorkflowBuild ? `/${repoName}` : "") +
+					(isProd && isWorkflowBuild && repoName !== "" ? `/${repoName}` : "") +
 					`/cms-images/${cmsAttachment.slug}/${img.file}`;
 			}
 			return `${myUrl} ${img.width}w`;
@@ -101,7 +105,7 @@ export async function CMSImage({
 	let fallbackImageUrl = fallbackImage.source_url;
 	if (isStatic) {
 		fallbackImageUrl =
-			(isProd && isWorkflowBuild ? `/${repoName}` : "") +
+			(isProd && isWorkflowBuild && repoName !== "" ? `/${repoName}` : "") +
 			`/cms-images/${cmsAttachment.slug}/${fallbackImage.file}`;
 	}
 
@@ -117,7 +121,7 @@ export async function CMSImage({
 	}
 
 	return (
-		<picture>
+		<picture className={containerClassName}>
 			<img
 				alt={altText || ""}
 				className={imgClass}

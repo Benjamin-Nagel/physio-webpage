@@ -46,3 +46,16 @@ export const baseMetadata: Metadata = {
 		title: webpageData.name,
 	},
 };
+
+export async function generateSimpleMetadata(
+	title: string,
+	description?: string,
+): Promise<Metadata> {
+	const clone = baseMetadata;
+	clone.title = title;
+	if (description) {
+		clone.description = description;
+	}
+
+	return clone;
+}

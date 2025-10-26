@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactElement } from "react";
 import type { GenericContentProps } from "@/types/types";
-import type { ContentInformationType } from "../PageWrapperInformationHelper";
 import { CMSImage, type CMSImageProps } from "./CMSImage";
 
 type HeroBase = GenericContentProps & {
@@ -27,8 +26,7 @@ type HeroWithChildren = HeroBase & {
 	description?: never;
 };
 
-export type HeroProps = ContentInformationType &
-	(HeroWithDescription | HeroWithChildren);
+export type HeroProps = HeroWithDescription | HeroWithChildren;
 
 export function Hero({
 	headline,
@@ -39,18 +37,21 @@ export function Hero({
 	link,
 	description,
 	children,
+	className,
 	blockStyles,
-	editorHintComponent,
+	EditorHintComponent,
 }: HeroProps) {
 	return (
 		<section
-			className={clsx(blockStyles && "editor-highlight",
-				"relative py-16",
+			className={clsx(
+				className,
+				blockStyles && "editor-highlight",
 				style === "dark" ? "bg-gray-50" : "",
+				"relative py-16",
 			)}
 			style={blockStyles}
 		>
-			{editorHintComponent && editorHintComponent}
+			{EditorHintComponent && <EditorHintComponent />}
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:flex lg:items-center lg:gap-12">
 				{/* Textbereich */}
 				<div className="lg:flex-1">

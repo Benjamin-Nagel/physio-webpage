@@ -1,6 +1,8 @@
+import type { Metadata } from "next";
 import { use } from "react";
 import { PageMiddleContent, PageWrapper } from "@/components/PageWrapper";
 import { TeamList, TeamMember } from "@/components/ui/Team";
+import { generateSimpleMetadata } from "@/data/seo";
 import { teamMembers } from "@/data/teamMembers";
 import { getGitHubWorkflowBuild, getWordpressApiUrl } from "@/lib/environment";
 import {
@@ -8,6 +10,10 @@ import {
 	type WordPressAcfContent,
 } from "@/lib/fetchContent";
 import type { TeamMember as TeamMemberAcf } from "@/types/types";
+
+export async function generateMetadata(): Promise<Metadata> {
+	return generateSimpleMetadata("Team");
+}
 
 export async function fetchPageContentByFile(): Promise<TeamMemberAcf[]> {
 	let data: TeamMemberAcf[] = teamMembers;

@@ -135,7 +135,7 @@ Je nach Krankheitsbild kann der Hund den Patient*innen die Angst vor Bewegung ne
 		id: 198,
 		image: 99,
 		name: "Reflektorische Atemtherapie",
-		short_description: "",
+		short_description: "asd",
 		slug: "reflektorische-atemtherapie",
 	},
 	{

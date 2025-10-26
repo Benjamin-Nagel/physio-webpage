@@ -3,6 +3,7 @@ import {
 	ChartBarIcon,
 	ClipboardDocumentIcon,
 } from "@heroicons/react/24/outline";
+import clsx from "clsx";
 import {
 	Exercise,
 	GroupDiscussionMeeting,
@@ -13,16 +14,19 @@ import {
 	PainManagment,
 	Refused,
 } from "healthicons-react";
+import type { Metadata } from "next";
 import {
 	HeroOverrideContent,
+	PageBottomContent,
 	PageMiddleContent,
 	PageTopContent,
 	PageWrapper,
 } from "@/components/PageWrapper";
+import { contentTypeInformationWrapperHelper } from "@/components/PageWrapperInformationHelper";
 import { Hero } from "@/components/ui/Hero";
+import { complaints } from "@/data/complaints";
+import { baseMetadata } from "@/data/seo";
 import { treatments } from "@/data/treatments";
-import { usePageContent } from "@/lib/fetchContent";
-import type { Treatment } from "@/types/types";
 
 const kgOffers = [
 	{
@@ -105,9 +109,9 @@ const kgBenefits = [
 ];
 
 interface LeistungParams {
-	params: {
+	params: Promise<{
 		slug: string;
-	};
+	}>;
 }
 
 export async function generateStaticParams() {
@@ -116,24 +120,39 @@ export async function generateStaticParams() {
 	});
 }
 
-export default function Leistung({ params }: LeistungParams) {
-	const { slug } = params;
+export async function generateMetadata({
+	params,
+}: LeistungParams): Promise<Metadata> {
+	const { slug } = await params;
 	const treatment = treatments.find((item) => item.slug === slug);
 
-	const content: Treatment = usePageContent<"treatments">({
-		id: treatment?.id || 0,
-		type: "treatments",
-	});
+	const clone = baseMetadata;
+	clone.title = treatment?.name;
+	clone.description = treatment?.short_description;
+
+	return clone;
+}
+
+export default async function Leistung({ params }: LeistungParams) {
+	const { slug } = await params;
+	const treatment = treatments.find((item) => item.slug === slug);
+
 	if (!treatment) {
 		return <div>Seite nicht gefunden</div>;
 	}
 
 	const heroHeadline = treatment.name;
-	let heroDescription: string = treatment.short_description;
+	const heroDescription: string = treatment.short_description;
 
-	if (content.short_description) {
-		heroDescription = content.short_description;
-	}
+	const { blockStyles, EditorHintComponent } =
+		contentTypeInformationWrapperHelper({
+			color: "#00ff11",
+			wrapperContent: {
+				content: "",
+				id: treatment.id,
+				type: "element",
+			},
+		});
 
 	return (
 		<PageWrapper context={{ id: 241, type: "my-page" }}>
@@ -141,22 +160,29 @@ export default function Leistung({ params }: LeistungParams) {
 				<Hero
 					description={heroDescription}
 					headline={heroHeadline}
-					image={{ cmsImageId: content.image }}
+					image={{ cmsImageId: treatment.image }}
 				/>
 			</HeroOverrideContent>
 			<PageTopContent>
 				<div>
-					{content.description && (
+					{treatment.description && (
 						<div
 							className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
-							dangerouslySetInnerHTML={{ __html: content.description }}
+							dangerouslySetInnerHTML={{ __html: treatment.description }}
 						/>
 					)}
 				</div>
 			</PageTopContent>
 
 			<PageMiddleContent>
-				<section className="py-12 bg-gray-50">
+				<section
+					className={clsx(
+						blockStyles && "editor-highlight",
+						"py-12 bg-gray-50",
+					)}
+					style={blockStyles}
+				>
+					{EditorHintComponent && <EditorHintComponent />}
 					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 						<h2 className="text-3xl font-bold text-gray-900 mb-6">
 							Unsere Krankengymnastik-Angebote
@@ -221,6 +247,52 @@ export default function Leistung({ params }: LeistungParams) {
 					</div>
 				</section>
 			</PageMiddleContent>
+			{treatment.complaints && treatment.complaints.length > 0 ? (
+				<PageBottomContent>
+					<section className="py-12 bg-indigo-50">
+						<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+							<h2 className="text-3xl font-bold text-gray-900 mb-8">
+								Einsatzmöglichkeiten bei uns in der Praxis
+							</h2>
+							<div
+								className={clsx(
+									blockStyles && "editor-highlight",
+									"grid gap-6 sm:grid-cols-2 lg:grid-cols-4",
+								)}
+								style={blockStyles}
+							>
+								{EditorHintComponent && (
+									<EditorHintComponent overrideContent="Behandlungen" />
+								)}
+								{treatment.complaints.map((complaintSlug) => {
+									const optionalComplaint = complaints.filter(
+										(aComplaint) => aComplaint.slug === complaintSlug,
+									);
+									if (!optionalComplaint || !optionalComplaint[0]) {
+										return undefined;
+									}
+									const { icon, name, short_description } =
+										optionalComplaint[0];
+									return (
+										<div
+											className="flex flex-col items-start p-6 bg-white rounded-2xl shadow hover:shadow-lg transition"
+											key={name}
+										>
+											<div className="flex columns-2 gap-2">
+												{icon}
+												<h3 className="text-xl font-semibold mb-2">{name}</h3>
+											</div>
+											<p className="text-gray-600">{short_description}</p>
+										</div>
+									);
+								})}
+							</div>
+						</div>
+					</section>
+				</PageBottomContent>
+			) : (
+				<></>
+			)}
 		</PageWrapper>
 	);
 }
