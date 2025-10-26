@@ -4,12 +4,18 @@ import {
 	DisclosurePanel,
 } from "@headlessui/react";
 import { MinusCircleIcon } from "@heroicons/react/20/solid";
+import type { Metadata } from "next";
 import { use } from "react";
 import { PageMiddleContent, PageWrapper } from "@/components/PageWrapper";
 import { faqs } from "@/data/faqs";
+import { generateSimpleMetadata } from "@/data/seo";
 import { getGitHubWorkflowBuild, getWordpressApiUrl } from "@/lib/environment";
 import type { WordPressAcfContent } from "@/lib/fetchContent";
 import type { FaqContent } from "@/types/types";
+
+export async function generateMetadata(): Promise<Metadata> {
+	return generateSimpleMetadata("FAQ");
+}
 
 async function loadFaqs(): Promise<FaqContent[]> {
 	let data: FaqContent[] = faqs;

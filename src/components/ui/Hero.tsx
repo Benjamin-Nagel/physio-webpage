@@ -37,11 +37,21 @@ export function Hero({
 	link,
 	description,
 	children,
+	className,
+	blockStyles,
+	EditorHintComponent,
 }: HeroProps) {
 	return (
 		<section
-			className={clsx("relative py-16", style === "dark" ? "bg-gray-50" : "")}
+			className={clsx(
+				className,
+				blockStyles && "editor-highlight",
+				style === "dark" ? "bg-gray-50" : "",
+				"relative py-16",
+			)}
+			style={blockStyles}
 		>
+			{EditorHintComponent && <EditorHintComponent />}
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:flex lg:items-center lg:gap-12">
 				{/* Textbereich */}
 				<div className="lg:flex-1">

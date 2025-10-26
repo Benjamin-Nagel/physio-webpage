@@ -3,6 +3,7 @@ import {
 	ClockIcon,
 	PhoneIcon,
 } from "@heroicons/react/24/outline";
+import type { Metadata } from "next";
 import GoogleMapOfficial from "@/components/maps/GoogleMap";
 import {
 	PageBottomContent,
@@ -13,6 +14,7 @@ import {
 import { Contact } from "@/components/ui/Contact";
 import { Feature, FeatureList } from "@/components/ui/Features";
 import { webpageData } from "@/data/general-page-data";
+import { generateSimpleMetadata } from "@/data/seo";
 import type { OpeningHour } from "@/types/types";
 
 type OpenHourGroup = {
@@ -57,6 +59,10 @@ function groupOpenHours(hours: OpeningHour[]): OpenHourGroup[] {
 	groups.push(currentGroup);
 
 	return groups;
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+	return generateSimpleMetadata("Kontakt");
 }
 
 export default function Kontakt() {

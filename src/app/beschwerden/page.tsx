@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
 	PageBottomContent,
 	PageMiddleContent,
@@ -9,6 +10,11 @@ import { Grid } from "@/components/ui/Grid";
 import { LoremIpsum } from "@/components/ui/LoremIpsum";
 import { Text } from "@/components/ui/Text";
 import { complaints } from "@/data/complaints";
+import { generateSimpleMetadata } from "@/data/seo";
+
+export async function generateMetadata(): Promise<Metadata> {
+	return generateSimpleMetadata("Beschwerden");
+}
 
 export default function Beschwerden() {
 	return (

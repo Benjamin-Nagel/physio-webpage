@@ -1,9 +1,11 @@
+import type { Service } from "klaro/dist/klaro-no-css";
 import type {
 	ForwardRefExoticComponent,
 	ReactElement,
 	RefAttributes,
 	SVGProps,
 } from "react";
+import type { ContentTypeInformationWrapperProps } from "@/components/PageWrapperInformationButton";
 import type { treatments } from "@/data/treatments";
 
 export type OpeningHour = {
@@ -17,6 +19,41 @@ export type OpeningHour = {
 		| "Sonntag";
 	start: string;
 	end: string;
+};
+
+type ExtendedCookie = {
+	name: string;
+	description: string;
+	lifeTime: string;
+	type: string;
+	hosts: string;
+};
+
+export type ServiceEntry = Omit<Service, "cookies"> & {
+	hosts: string;
+	provider: {
+		name: string;
+		description: string;
+		address: string;
+		cookieUrl: string;
+		dataPrivacyUrl: string;
+	};
+	cookies?: ExtendedCookie[];
+};
+export type ProviderEntry = Omit<Service, "cookies"> & {
+	hosts: string;
+	provider: {
+		name: string;
+		description: string;
+		address: string;
+		cookieUrl: string;
+		dataPrivacyUrl: string;
+	};
+};
+
+export type CookieInformation = {
+	services: ServiceEntry[];
+	providers: ProviderEntry[];
 };
 
 export type WebpageDataType = {
@@ -38,6 +75,7 @@ export type WebpageDataType = {
 	mobile: string;
 	telephone: string;
 	fax: string;
+	cookieInformation: CookieInformation;
 };
 
 export type GenericIcon = ForwardRefExoticComponent<
@@ -51,9 +89,23 @@ export type SvgIconType =
 	| React.ReactElement<React.SVGProps<SVGSVGElement>>
 	| React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
+type PreFilledContentTypeInformationProps = Omit<
+	ContentTypeInformationWrapperProps,
+	"type" | "id" | "content"
+>;
+
 export type GenericContentProps = {
 	headline: string;
 	style?: "light" | "dark";
+
+	className?: string;
+	styles?: React.CSSProperties;
+
+	wrapperColor?: string;
+	blockStyles?: React.CSSProperties;
+	EditorHintComponent?:
+		| React.ComponentType<PreFilledContentTypeInformationProps>
+		| undefined;
 };
 
 export type GenericAcfContent = {

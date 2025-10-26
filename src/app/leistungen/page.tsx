@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
 	PageBottomContent,
 	PageMiddleContent,
@@ -8,7 +9,12 @@ import { CTA } from "@/components/ui/Cta";
 import { Grid } from "@/components/ui/Grid";
 import { LoremIpsum } from "@/components/ui/LoremIpsum";
 import { Text } from "@/components/ui/Text";
+import { generateSimpleMetadata } from "@/data/seo";
 import { treatments } from "@/data/treatments";
+
+export async function generateMetadata(): Promise<Metadata> {
+	return generateSimpleMetadata("Leistungen");
+}
 
 export default function Leistungen() {
 	return (

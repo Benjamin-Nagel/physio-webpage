@@ -24,3 +24,10 @@ body {
 	color: var(--foreground);
 	background: var(--background);
 }
+
+body[data-editor-mode="true"] .editor-highlight {
+	/* Alle diese Stile sind Tailwind-Klassen */
+	border-color: var(--editor-border-color);
+	/* Alle diese Stile sind Tailwind-Klassen */
+	@apply border-2 border-dashed rounded-lg relative;
+}
