@@ -6,7 +6,7 @@
 		"@heroicons/react": "^2.2.0",
 		"healthicons-react": "^3.5.0",
 		"klaro": "^0.7.21",
-		"next": "15.5.5",
+		"next": "15.5.7",
 		"react": "19.1.0",
 		"react-dom": "19.1.0",
 		"schema-dts": "^1.1.5"
